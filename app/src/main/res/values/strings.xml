@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">ProyectoIntegradorII</string>
+
+    <!-- Registro  -->
+    <string name="txtRegistrarse">Registrar Vendedor</string>
+    <string name="etNombres">Nombre Completo</string>
+    <string name="etEmail">Email</string>
+    <string name="etPassword">Password</string>
+    <string name="btnRegistrarV">Registrar Vendedor</string>
+
+    <!-- Login  -->
+    <string name="txtLoginV">Login</string>
+    <string name="btnLogin">Ingresar</string>
+    <string name="txtNoCuenta">¿No tienes una cuenta?</string>
+    <string name="txtRegistrar">¡Avisale a tu supervisor!</string>
+
+    <!-- Lista -->
+    <string name="inicio">Inicio</string>
+    <string name="reservas">Reservas del Día</string>
+    <string name="mesas">Mesas Disponibles</string>
+    <string name="usuario">Registrar Cliente</string>
+    <string name="cerrar_sesion">Cerrar sesión</string>
+
+    <!-- Opciones Reservas -->
+    <string-array name="opciones_reserva">
+        <item>Asignar</item>
+        <item>Liberar</item>
+    </string-array>
+
+    <!-- Drawer -->
+    <string name="navigation_drawer_open">Abrir menú</string>
+    <string name="navigation_drawer_close">Cerrar menú</string>
+</resources>

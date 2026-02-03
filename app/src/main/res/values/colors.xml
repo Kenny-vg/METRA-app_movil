@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!--
+    New Coffee-Shop Theme Palette
+    -->
+    <color name="coffee_brown_dark">#4E342E</color>
+    <color name="coffee_brown_medium">#6D4C41</color>
+    <color name="coffee_cream">#F5EFE6</color>
+    <color name="coffee_accent_amber">#FFAB40</color>
+
+    <!-- Text Colors -->
+    <color name="text_color_primary">#3E2723</color>
+    <color name="text_color_secondary">#795548</color>
+
+    <!-- Status Colors  -->
+    <color name="status_available">#689F38</color>
+    <color name="status_occupied">#D32F2F</color>
+    <color name="status_reserved">#FFA000</color>
+
+
+    <color name="fondo">#F1E5D1</color>
+    <color name="rosa_suave">#DBB5B5</color>
+    <color name="rosa_letra">#C39898</color>
+    <color name="rosa_fuerte">#987070</color>
+
+    <!-- Mesa disponible -->
+    <color name="verde">#7CB342</color>
+    <!-- Mesa ocupada -->
+    <color name="rojo">#C62828</color>
+    <!-- Mesa reservada -->
+    <color name="mesa_reservada">#F9A825</color>
+</resources>

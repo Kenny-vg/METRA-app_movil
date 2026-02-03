@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/coffee_cream"
+    tools:context=".RegistrarClienteActivity">
+
+    <!-- TOOLBAR SUPERIOR -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/coffee_brown_dark"
+        android:titleTextColor="@android:color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="23dp"
+        android:layout_height="31dp"
+        android:contentDescription="Menú de opciones"
+        android:translationX="360dp"
+        android:translationY="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/puntos" />
+
+    <!-- SCROLL DEL CONTENIDO -->
+    <ScrollView
+        android:id="@+id/scrollContent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintBottom_toTopOf="@id/menuBottom">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <!-- TÍTULO PEGADO AL TOOLBAR -->
+
+            <!-- NÚMERO PERSONAS -->
+            <TextView
+                style="@style/TextAppearance.App.Headline1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:gravity="center"
+                android:text="Registrar"
+                android:textSize="50sp" />
+
+            <TextView
+                style="@style/TextAppearance.App.Label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Número de personas"
+                android:layout_marginBottom="8dp"/>
+
+            <Spinner
+                android:id="@+id/spNumeroPersonas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp" />
+
+            <!-- ZONA -->
+            <TextView
+                style="@style/TextAppearance.App.Label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Zona"
+                android:layout_marginBottom="8dp"/>
+
+            <Spinner
+                android:id="@+id/spZona"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"/>
+
+            <!-- ASIGNAR MESA -->
+            <TextView
+                style="@style/TextAppearance.App.Label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Asignar Mesa"
+                android:layout_marginBottom="8dp"/>
+
+            <Spinner
+                android:id="@+id/spMesa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"/>
+
+            <!-- COMENTARIOS -->
+            <TextView
+                style="@style/TextAppearance.App.Label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Comentarios"
+                android:layout_marginBottom="5dp"/>
+
+            <EditText
+                android:id="@+id/etComentarios"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="32dp"
+                android:gravity="top"
+                android:hint="Comentarios opcionales..."
+                android:minHeight="50dp" />
+
+            <!-- BOTÓN CONFIRMAR -->
+            <Button
+                android:id="@+id/btn_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="CONFIRMAR"
+                android:textColor="@color/white"
+                android:layout_marginBottom="8dp"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- MENÚ INFERIOR FIJO -->
+    <include
+        android:id="@+id/menuBottom"
+        layout="@layout/menu_inferior"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

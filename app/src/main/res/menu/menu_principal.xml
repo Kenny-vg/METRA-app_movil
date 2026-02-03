@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group
+        android:id="@+id/group_op"
+        android:checkableBehavior="single">
+
+        <!-- Inicio -->
+        <item
+            android:id="@+id/navigation_home"
+            android:title="@string/inicio"
+            android:icon="@drawable/ico_casa"
+            app:showAsAction="never" />
+
+        <!-- Reservas -->
+        <item
+            android:id="@+id/navigation_reservations"
+            android:title="@string/reservas"
+            android:icon="@drawable/ico_reservas"
+            app:showAsAction="never" />
+
+        <!-- Mesas -->
+        <item
+            android:id="@+id/navigation_tables"
+            android:title="@string/mesas"
+            android:icon="@drawable/ico_mesa"
+            app:showAsAction="never"/>
+
+        <!-- Usuario -->
+        <item
+            android:id="@+id/navigation_profile"
+            android:title="@string/usuario"
+            android:icon="@drawable/ico_usuario"
+            app:showAsAction="never"/>
+    </group>
+
+    <!-- Cerrar Sesión -->
+    <item
+        android:id="@+id/navigation_logout"
+        android:title="@string/cerrar_sesion"
+        android:icon="@drawable/ico_exit"
+        app:showAsAction="never" />
+</menu>

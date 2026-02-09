@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".InicioActivity"
+    tools:openDrawer="start">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/coffee_cream">
+
+
+        <!-- TOOLBAR SUPERIOR -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/coffee_brown_dark"
+            android:titleTextColor="@android:color/white"
+            app:navigationIconTint="@color/fondo"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+            <!-- CONTENIDO SCROLLABLE -->
+            <ScrollView
+                android:id="@+id/scrollContent"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toBottomOf="@id/toolbar"
+                app:layout_constraintBottom_toTopOf="@id/bottom_navigation">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+
+                <!-- TITULO -->
+
+                <!-- BIENVENIDA -->
+                <TextView
+                    android:id="@+id/tvTitulo"
+                    style="@style/TextAppearance.App.Headline1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/lora"
+                    android:text="INICIO"
+                    android:textAlignment="center" />
+
+                <TextView
+                    android:id="@+id/tvBienvenida"
+                    style="@style/TextAppearance.App.Headline2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_medium"
+                    android:text="Bienvenido, Samantha" />
+
+                <!-- FECHA -->
+                <TextView
+                    android:id="@+id/textView2"
+                    style="@style/TextAppearance.App.Body1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="30/01/2026"
+                    android:layout_marginBottom="@dimen/spacing_large"/>
+
+
+
+                <!-- CARD 1 -->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="130dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/card_inicio"
+                    android:elevation="6dp"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        style="@style/TextAppearance.App.Headline2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Reservas del día"
+                        android:textColor="@color/white"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginTop="4dp"
+                        android:background="@color/white" />
+
+                    <TextView
+                        android:id="@+id/tvReservasCount"
+                        style="@style/TextAppearance.App.Headline1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="10"
+                        android:textColor="@color/white"
+                        android:textSize="48sp" />
+                </LinearLayout>
+
+                <!-- CARD 2 -->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="130dp"
+                    android:background="@drawable/card_inicio"
+                    android:elevation="6dp"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        style="@style/TextAppearance.App.Headline2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Mesas disponibles"
+                        android:textColor="@color/white" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginTop="4dp"
+                        android:background="@color/white" />
+
+                    <TextView
+                        android:id="@+id/tvMesasCount"
+                        style="@style/TextAppearance.App.Headline1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="15"
+                        android:textColor="@color/white"
+                        android:textSize="48sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </ScrollView>
+
+        <!-- MENÚ INFERIOR (CORREGIDO) -->
+        <include
+            android:id="@+id/bottom_navigation" 
+            layout="@layout/menu_inferior"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@color/fondo"
+        app:headerLayout="@layout/barra_superior"
+        app:menu="@menu/menu_principal" />
+
+</androidx.drawerlayout.widget.DrawerLayout>

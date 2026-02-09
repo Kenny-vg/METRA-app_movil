@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/coffee_cream"
+    tools:context=".mesas.MesasActivity">
+
+    <!-- TOOLBAR SUPERIOR -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/coffee_brown_dark"
+        android:titleTextColor="@android:color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+    <!-- TITULO DEBAJO DEL TOOLBAR -->
+    <TextView
+        android:id="@+id/tvTitulo"
+        style="@style/TextAppearance.App.Headline1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/lora"
+        android:text="MESAS"
+        android:textAlignment="center"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"/>
+
+    <!-- BUSCADOR -->
+    <EditText
+        android:id="@+id/etBuscar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/spacing_medium"
+        android:drawableStart="@drawable/ico_lupa"
+        android:drawablePadding="@dimen/spacing_medium"
+        android:hint="Buscar mesa..."
+        app:layout_constraintTop_toBottomOf="@id/tvTitulo"/>
+
+    <!-- SPINNER -->
+    <Spinner
+        android:id="@+id/spinnerZona"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_medium"
+        android:layout_marginEnd="@dimen/spacing_medium"
+        app:layout_constraintTop_toBottomOf="@id/etBuscar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <!-- LISTA DE MESAS -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvMesas"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:padding="@dimen/spacing_small"
+        app:layout_constraintTop_toBottomOf="@id/spinnerZona"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"/>
+
+    <!-- MENÚ INFERIOR -->
+    <include
+        android:id="@+id/bottom_navigation"
+        layout="@layout/menu_inferior"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

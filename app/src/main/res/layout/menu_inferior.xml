@@ -9,4 +9,5 @@
     app:menu="@menu/bottom_nav_menu"
     app:labelVisibilityMode="unlabeled"
     app:itemIconTint="@color/bottom_nav_item_color"
-    app:itemTextColor="@color/white" />
+    app:itemTextColor="@color/white"
+    app:itemActiveIndicatorStyle="@style/App.Custom.Indicator" />

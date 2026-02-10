@@ -92,4 +92,9 @@
         <item name="android:textColor">@color/text_color_primary</item>
     </style>
 
+    <!-- Style for the BottomNavigationView indicator -->
+    <style name="App.Custom.Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:drawable">@drawable/bottom_nav_indicator_style</item>
+    </style>
+
 </resources>

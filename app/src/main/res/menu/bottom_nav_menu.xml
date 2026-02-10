@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/bottom_home"
+        android:icon="@drawable/ico_casa"
+        android:title="Inicio"/>
+
+    <item
+        android:id="@+id/bottom_reservations"
+        android:icon="@drawable/ico_reservas"
+        android:title="Reservas"/>
+
+    <item
+        android:id="@+id/bottom_tables"
+        android:icon="@drawable/ico_mesa"
+        android:title="Mesas"/>
+
+    <item
+        android:id="@+id/bottom_profile"
+        android:icon="@drawable/ico_usuario"
+        android:title="Perfil"/>
+</menu>
+

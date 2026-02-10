@@ -3,7 +3,6 @@ package com.softnamic.proyectointegradorii.mesas
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.Spinner
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.softnamic.proyectointegradorii.BaseActivity
@@ -11,19 +10,18 @@ import com.softnamic.proyectointegradorii.R
 
 class MesasActivity : BaseActivity() {
 
-    private lateinit var rvMesas: RecyclerView
-    private lateinit var spinnerZona: Spinner
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mesas)
-        configurarMenuInferior()
+        
+        // Le indicamos al menú inferior que estamos en la pantalla de "Mesas"
+        configurarMenuInferior(R.id.bottom_tables)
 
-        // 🔹 Inicializar vistas
-        rvMesas = findViewById(R.id.rvMesas)
-        spinnerZona = findViewById(R.id.spinnerZona)
+        val rvMesas = findViewById<RecyclerView>(R.id.rvMesas)
+        // CORRECCIÓN FINAL Y DEFINITIVA: Usar el ID correcto del Spinner que está en el layout (activity_mesas.xml)
+        val spinnerZona = findViewById<Spinner>(R.id.spinnerZona)
 
-        // 1️⃣ Datos falsos (mock)
+        // --- Mock Data (Datos de ejemplo) ---
         val mesasFake = listOf(
             Mesa(1, "Mesa 1", 4, "Fumadores", EstadoMesa.DISPONIBLE),
             Mesa(2, "Mesa 2", 2, "No fumadores", EstadoMesa.OCUPADA),
@@ -32,24 +30,13 @@ class MesasActivity : BaseActivity() {
             Mesa(5, "Mesa 5", 4, "No fumadores", EstadoMesa.DISPONIBLE)
         )
 
-        // 2️⃣ RecyclerView
         rvMesas.layoutManager = LinearLayoutManager(this)
         rvMesas.adapter = MesasAdapter(mesasFake)
 
-        // 3️⃣ Spinner de ZONAS
-        val zonas = listOf(
-            "Todas",
-            "Fumadores",
-            "No fumadores",
-            "Terraza"
-        )
-
-        val zonaAdapter = ArrayAdapter(
-            this,
-            android.R.layout.simple_spinner_item,
-            zonas
-        )
-        zonaAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        // --- Spinner de ZONAS (Lógica correcta) ---
+        val zonas = listOf("Todas", "Fumadores", "No fumadores", "Terraza")
+        val zonaAdapter = ArrayAdapter(this, R.layout.spinner_item_custom, zonas)
+        zonaAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item_custom)
         spinnerZona.adapter = zonaAdapter
     }
 }

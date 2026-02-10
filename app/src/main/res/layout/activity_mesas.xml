@@ -20,16 +20,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="23dp"
-        android:layout_height="31dp"
-        android:contentDescription="Menú de opciones"
-        android:translationX="360dp"
-        android:translationY="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/puntos" />
 
     <!-- TITULO DEBAJO DEL TOOLBAR -->
     <TextView
@@ -72,11 +62,11 @@
         android:layout_marginTop="@dimen/spacing_small"
         android:padding="@dimen/spacing_small"
         app:layout_constraintTop_toBottomOf="@id/spinnerZona"
-        app:layout_constraintBottom_toTopOf="@id/menuBottom"/>
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"/>
 
     <!-- MENÚ INFERIOR -->
     <include
-        android:id="@+id/menuBottom"
+        android:id="@+id/bottom_navigation"
         layout="@layout/menu_inferior"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

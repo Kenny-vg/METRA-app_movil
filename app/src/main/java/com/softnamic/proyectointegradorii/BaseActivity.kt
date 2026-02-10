@@ -1,78 +1,59 @@
 package com.softnamic.proyectointegradorii
 
 import android.content.Intent
-import android.view.Menu
-import android.view.MenuItem
-import android.widget.ImageView
+import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.softnamic.proyectointegradorii.mesas.MesasActivity
 import com.softnamic.proyectointegradorii.reservas.ReservasActivity
 
 open class BaseActivity : AppCompatActivity() {
 
-    // 🔹 CONTROLAR SI ESTA PANTALLA TIENE MENÚ DE 3 PUNTITOS
-    open fun mostrarMenuOverflow(): Boolean = true
+    // Variable para guardar el ID del item del menú para ESTA activity en particular
+    private var navItemId: Int = 0
 
-    // ---------------- MENÚ INFERIOR ----------------
-    fun configurarMenuInferior() {
-
-        findViewById<ImageView>(R.id.inicio)?.setOnClickListener {
-            startActivity(Intent(this, InicioActivity::class.java))
-        }
-
-        findViewById<ImageView>(R.id.reservas)?.setOnClickListener {
-            startActivity(Intent(this, ReservasActivity::class.java))
-        }
-
-        findViewById<ImageView>(R.id.mesas)?.setOnClickListener {
-            startActivity(Intent(this, MesasActivity::class.java))
-        }
-
-        findViewById<ImageView>(R.id.usuario)?.setOnClickListener {
-            startActivity(Intent(this, RegistrarClienteActivity::class.java))
+    /**
+     * onResume() se llama cada vez que la activity pasa a primer plano.
+     * (Al crearla por primera vez o al volver a ella con el botón de retroceso).
+     * Aquí nos aseguramos de que el botón correcto esté seleccionado.
+     */
+    override fun onResume() {
+        super.onResume()
+        if (navItemId != 0) {
+            val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+            bottomNavigationView.selectedItemId = navItemId
         }
     }
 
-    // ---------------- MENÚ 3 PUNTITOS ----------------
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        if (!mostrarMenuOverflow()) return false
-        menuInflater.inflate(R.menu.menu_principal, menu)
-        return true
-    }
+    fun configurarMenuInferior(selectedItemId: Int) {
+        // 1. Guardamos cuál es el item de esta Activity
+        navItemId = selectedItemId
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
 
-            R.id.navigation_home -> {
-                startActivity(Intent(this, InicioActivity::class.java))
-                return true
+        // 2. Establecemos el listener para manejar los clics
+        bottomNavigationView.setOnItemSelectedListener { item ->
+            // Si el usuario hace clic en el mismo ítem donde ya está, no hacemos nada.
+            if (item.itemId == selectedItemId) {
+                return@setOnItemSelectedListener true
             }
 
-            R.id.navigation_reservations -> {
-                startActivity(Intent(this, ReservasActivity::class.java))
-                return true
+            val intent = when (item.itemId) {
+                R.id.bottom_home -> Intent(this, InicioActivity::class.java)
+                R.id.bottom_reservations -> Intent(this, ReservasActivity::class.java)
+                R.id.bottom_tables -> Intent(this, MesasActivity::class.java)
+                R.id.bottom_profile -> Intent(this, RegistrarClienteActivity::class.java)
+                else -> null
             }
 
-            R.id.navigation_tables -> {
-                startActivity(Intent(this, MesasActivity::class.java))
-                return true
+            intent?.let {
+                // 3. Usamos REORDER_TO_FRONT para una navegación eficiente
+                it.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+                startActivity(it)
+                // 4. Anulamos las animaciones para una transición limpia
+                overridePendingTransition(0, 0)
             }
-
-            R.id.navigation_profile -> {
-                startActivity(Intent(this, RegistrarClienteActivity::class.java))
-                return true
-            }
-
-            R.id.navigation_logout -> {
-                cerrarSesion()
-                return true
-            }
+            true
         }
-        return super.onOptionsItemSelected(item)
-    }
-
-    private fun cerrarSesion() {
-        startActivity(Intent(this, MainActivity::class.java))
-        finishAffinity()
     }
 }

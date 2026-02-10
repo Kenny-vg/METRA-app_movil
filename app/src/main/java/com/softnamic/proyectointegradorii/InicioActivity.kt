@@ -20,7 +20,8 @@ class InicioActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_inicio)
 
-        configurarMenuInferior()
+        // Le indicamos al menú inferior que estamos en la pantalla de "Inicio"
+        configurarMenuInferior(R.id.bottom_home)
 
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -69,4 +70,3 @@ class InicioActivity : BaseActivity() {
         return super.onOptionsItemSelected(item)
     }
 }
-

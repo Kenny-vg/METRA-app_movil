@@ -2,7 +2,10 @@ package com.softnamic.proyectointegradorii
 
 import android.os.Bundle
 import android.widget.ArrayAdapter
-import android.widget.Spinner
+import android.widget.AutoCompleteTextView
+import android.widget.Button
+import android.widget.Toast
+import com.google.android.material.textfield.TextInputEditText
 
 class RegistrarClienteActivity : BaseActivity() {
 
@@ -10,29 +13,42 @@ class RegistrarClienteActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registrar_cliente)
 
-        // Le indicamos al menú inferior que estamos en la pantalla de "Perfil"
         configurarMenuInferior(R.id.bottom_profile)
 
-        // SPINNERS
-        val spNumeroPersonas = findViewById<Spinner>(R.id.spNumeroPersonas)
-        val spMesa = findViewById<Spinner>(R.id.spMesa)
-        val spZona = findViewById<Spinner>(R.id.spZona)
+        val spNumeroPersonas = findViewById<AutoCompleteTextView>(R.id.spNumeroPersonas)
+        val spZona = findViewById<AutoCompleteTextView>(R.id.spZona)
+        val btnConfirmar = findViewById<Button>(R.id.btn_confirmar)
+        val etNombre = findViewById<TextInputEditText>(R.id.etNombre)
 
-        val personas = arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "10")
-        val mesas = arrayOf("Mesa 1", "Mesa 2", "Mesa 3", "Mesa 4")
-        val zona = arrayOf("Fumadores", "Fiesta", "Otros")
+        val adapterPersonas = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, (1..10).map { it.toString() })
+        spNumeroPersonas.setAdapter(adapterPersonas)
 
-        // Usamos los adapters personalizados para mantener la consistencia
-        val adapterPersonas = ArrayAdapter(this, R.layout.spinner_item_custom, personas)
-        adapterPersonas.setDropDownViewResource(R.layout.spinner_dropdown_item_custom)
-        spNumeroPersonas.adapter = adapterPersonas
+        val adapterZonas = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, listOf("Fumadores", "No fumadores", "Terraza"))
+        spZona.setAdapter(adapterZonas)
 
-        val adapterMesas = ArrayAdapter(this, R.layout.spinner_item_custom, mesas)
-        adapterMesas.setDropDownViewResource(R.layout.spinner_dropdown_item_custom)
-        spMesa.adapter = adapterMesas
+        btnConfirmar.setOnClickListener {
+            val nombre = etNombre.text.toString()
+            val personas = spNumeroPersonas.text.toString()
+            val zona = spZona.text.toString()
 
-        val adapterZona = ArrayAdapter(this, R.layout.spinner_item_custom, zona)
-        adapterZona.setDropDownViewResource(R.layout.spinner_dropdown_item_custom)
-        spZona.adapter = adapterZona
+            if (nombre.isEmpty()) {
+                etNombre.error = "El nombre es obligatorio"
+                return@setOnClickListener
+            }
+
+            if (personas.isEmpty() || personas.toInt() <= 0) {
+                spNumeroPersonas.error = "Debe seleccionar un número de personas mayor a 0"
+                return@setOnClickListener
+            }
+
+            if (zona.isEmpty()) {
+                spZona.error = "Debe seleccionar una zona"
+                return@setOnClickListener
+            }
+
+            Toast.makeText(this, "Registro exitoso", Toast.LENGTH_SHORT).show()
+            // Aquí iría la lógica para guardar el registro
+            finish()
+        }
     }
 }

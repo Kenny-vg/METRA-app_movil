@@ -1,10 +1,10 @@
 package com.softnamic.proyectointegradorii.reservas
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-
 import androidx.recyclerview.widget.RecyclerView
 import com.softnamic.proyectointegradorii.R
 
@@ -17,6 +17,7 @@ class ReservaAdapter(
         val nombre: TextView = view.findViewById(R.id.tvNombre)
         val mesa: TextView = view.findViewById(R.id.tvMesa)
         val zona: TextView = view.findViewById(R.id.tvZona)
+        val estado: TextView = view.findViewById(R.id.tvEstado)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -31,6 +32,21 @@ class ReservaAdapter(
         holder.nombre.text = "${reserva.nombre} - ${reserva.hora}"
         holder.mesa.text = reserva.mesa ?: "Sin mesa asignada"
         holder.zona.text = "Zona: ${reserva.zona}"
+
+        when (reserva.estado) {
+            "Llegó" -> {
+                holder.estado.text = "Llegó"
+                holder.itemView.setBackgroundColor(Color.parseColor("#D0F0C0")) // Verde claro
+            }
+            "No llegó" -> {
+                holder.estado.text = "No llegó"
+                holder.itemView.setBackgroundColor(Color.parseColor("#FFD0D0")) // Rojo claro
+            }
+            else -> {
+                holder.estado.text = "Pendiente"
+                holder.itemView.setBackgroundColor(Color.TRANSPARENT)
+            }
+        }
 
         holder.itemView.setOnClickListener {
             onClick(reserva)

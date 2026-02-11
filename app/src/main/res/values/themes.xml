@@ -2,19 +2,24 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.ProyectoIntegradorII" parent="Theme.Material3.DayNight.NoActionBar">
 
-
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/coffee_brown_medium</item>
-        <item name="colorPrimaryVariant">@color/coffee_brown_dark</item>
-        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimary">@color/coffee_primary</item>
+        <item name="colorPrimaryVariant">@color/coffee_primary_variant</item>
+        <item name="colorOnPrimary">@color/coffee_on_primary</item>
+
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/coffee_accent_amber</item>
-        <item name="colorSecondaryVariant">@color/coffee_accent_amber</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorSecondary">@color/coffee_secondary</item>
+        <item name="colorSecondaryVariant">@color/coffee_secondary</item>
+        <item name="colorOnSecondary">@color/coffee_on_secondary</item>
+
+        <!-- Backgrounds -->
+        <item name="android:colorBackground">@color/coffee_cream_background</item>
+        <item name="colorSurface">@color/coffee_surface</item>
+        <item name="colorOnSurface">@color/coffee_on_surface</item>
+
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">@color/coffee_brown_dark</item>
-        <!-- Background color. -->
-        <item name="android:windowBackground">@color/coffee_cream</item>
+        <item name="android:statusBarColor">@color/coffee_primary_variant</item>
+        <item name="android:windowBackground">@color/coffee_cream_background</item>
 
         <!-- Typography -->
         <item name="android:fontFamily">@font/lato</item>
@@ -34,6 +39,16 @@
     </style>
 
     <style name="Theme.ProyectoIntegradorII" parent="Base.Theme.ProyectoIntegradorII" />
+
+    <!-- Tema dedicado para el Splash Screen del Sistema (Android 12+) -->
+    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
+        <!-- 1. El color de fondo debe ser el mismo que el de tu Activity -->
+        <item name="windowSplashScreenBackground">@color/white</item>
+        <!-- 2. Usamos el nuevo ícono con padding -->
+        <item name="windowSplashScreenAnimatedIcon">@drawable/splash_icon_padded</item>
+        <!-- 3. El tema que se aplicará DESPUÉS del splash -->
+        <item name="postSplashScreenTheme">@style/Theme.ProyectoIntegradorII</item>
+    </style>
 
     <!-- Text Appearance Styles -->
     <style name="TextAppearance.App.Headline1" parent="TextAppearance.MaterialComponents.Headline1">
@@ -68,7 +83,7 @@
     <style name="Widget.App.Button" parent="Widget.MaterialComponents.Button">
         <item name="android:background">@drawable/button_background</item>
         <item name="android:textColor">@color/black</item>
-        <item name="android:fontFamily">@font/lato</item>
+        <item name="android:fontFamily">@font/lato</item> <!-- CORREGIDO -->
         <item name="android:textAllCaps">false</item>
         <item name="android:paddingLeft">@dimen/spacing_large</item>
         <item name="android:paddingRight">@dimen/spacing_large</item>

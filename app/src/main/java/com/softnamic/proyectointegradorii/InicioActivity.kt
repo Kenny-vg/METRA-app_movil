@@ -3,11 +3,12 @@ package com.softnamic.proyectointegradorii
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
+import com.softnamic.proyectointegradorii.mesas.MesasActivity
+import com.softnamic.proyectointegradorii.reservas.ReservasActivity
 
 
 class InicioActivity : BaseActivity() {
@@ -42,20 +43,20 @@ class InicioActivity : BaseActivity() {
         navView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.navigation_home -> {
-                    Toast.makeText(this, "Inicio", Toast.LENGTH_SHORT).show()
+                    // Ya estamos en Inicio, no hacer nada
                 }
                 R.id.navigation_reservations -> {
-                    Toast.makeText(this, "Aquí irá ReservasActivity", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this, ReservasActivity::class.java))
                 }
                 R.id.navigation_tables -> {
-                    Toast.makeText(this, "Aquí irá MesasActivity", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this, MesasActivity::class.java))
                 }
                 R.id.navigation_profile -> {
-                    Toast.makeText(this, "Aquí irá RegistrarClienteActivity", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this, RegistrarClienteActivity::class.java))
                 }
                 R.id.navigation_logout -> {
-                    Toast.makeText(this, "Cerrar sesión", Toast.LENGTH_SHORT).show()
-                    finish()
+                    startActivity(Intent(this, LoginActivity::class.java))
+                    finishAffinity() // Cierra todas las actividades
                 }
             }
             drawerLayout.closeDrawers()

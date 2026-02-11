@@ -5,6 +5,7 @@ data class Reserva(
     val hora: String,
     val personas: Int,
     val zona: String,
-    val comentarios: String,
-    var mesa: String?
+    val comentarios: String?,
+    var mesa: String?,
+    var estado: String? = null // Puede ser "Llegó", "No llegó", etc.
 )

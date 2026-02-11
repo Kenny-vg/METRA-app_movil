@@ -15,11 +15,12 @@
         android:layout_height="wrap_content"
         android:background="@color/coffee_brown_dark"
         android:titleTextColor="@android:color/white"
+        app:navigationIconTint="@color/fondo"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <!-- SCROLL DEL CONTENIDO -->
+    <!-- CONTENIDO SCROLLABLE -->
     <ScrollView
         android:id="@+id/scrollContent"
         android:layout_width="match_parent"
@@ -31,91 +32,129 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="20dp">
+            android:padding="24dp">
 
-            <!-- TÍTULO PEGADO AL TOOLBAR -->
-
-            <!-- NÚMERO PERSONAS -->
             <TextView
                 style="@style/TextAppearance.App.Headline1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
                 android:gravity="center"
-                android:text="Registrar"
-                android:textSize="50sp" />
+                android:text="REGISTRAR"
+                android:fontFamily="@font/lora"
+                android:textColor="@color/coffee_primary"
+                android:textStyle="bold"/>
 
-            <TextView
-                style="@style/TextAppearance.App.Label"
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Número de personas"
-                android:layout_marginBottom="8dp"/>
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="@color/coffee_surface">
 
-            <Spinner
-                android:id="@+id/spNumeroPersonas"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="24dp">
 
-            <!-- ZONA -->
-            <TextView
-                style="@style/TextAppearance.App.Label"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Zona"
-                android:layout_marginBottom="8dp"/>
+                    <!-- NOMBRE -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:hint="Nombre del cliente"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
 
-            <Spinner
-                android:id="@+id/spZona"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"/>
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etNombre"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textPersonName" />
 
-            <!-- ASIGNAR MESA -->
-            <TextView
-                style="@style/TextAppearance.App.Label"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Asignar Mesa"
-                android:layout_marginBottom="8dp"/>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-            <Spinner
-                android:id="@+id/spMesa"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"/>
+                    <!-- NÚMERO PERSONAS -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:hint="Número de personas">
 
-            <!-- COMENTARIOS -->
-            <TextView
-                style="@style/TextAppearance.App.Label"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Comentarios"
-                android:layout_marginBottom="5dp"/>
+                        <AutoCompleteTextView
+                            android:id="@+id/spNumeroPersonas"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="none" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
-            <EditText
-                android:id="@+id/etComentarios"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="32dp"
-                android:gravity="top"
-                android:hint="Comentarios opcionales..."
-                android:minHeight="50dp" />
+                    <!-- ZONA -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:hint="Zona">
 
-            <!-- BOTÓN CONFIRMAR -->
-            <Button
-                android:id="@+id/btn_login"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="CONFIRMAR"
-                android:textColor="@color/white"
-                android:layout_marginBottom="8dp"/>
+                        <AutoCompleteTextView
+                            android:id="@+id/spZona"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="none" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- ASIGNAR MESA -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:hint="Asignar Mesa">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/spMesa"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="none" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- COMENTARIOS -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="24dp"
+                        android:hint="Comentarios (Opcional)"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etComentarios"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="top"
+                            android:inputType="textMultiLine"
+                            android:lines="3"
+                            android:minHeight="80dp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- BOTÓN CONFIRMAR -->
+                    <Button
+                        android:id="@+id/btn_confirmar"
+                        style="@style/Widget.Material3.Button"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:text="CONFIRMAR REGISTRO"
+                        android:textSize="16sp"
+                        app:backgroundTint="@color/coffee_primary" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
 
         </LinearLayout>
     </ScrollView>
 
-    <!-- MENÚ INFERIOR FIJO -->
+    <!-- MENÚ INFERIOR -->
     <include
         android:id="@+id/bottom_navigation"
         layout="@layout/menu_inferior"

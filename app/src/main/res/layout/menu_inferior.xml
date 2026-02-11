@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:background="@color/coffee_brown_dark"
     app:menu="@menu/bottom_nav_menu"
-    app:labelVisibilityMode="unlabeled"
+    app:labelVisibilityMode="labeled"
     app:itemIconTint="@color/bottom_nav_item_color"
     app:itemTextColor="@color/white"
     app:itemActiveIndicatorStyle="@style/App.Custom.Indicator" />

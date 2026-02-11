@@ -3,33 +3,42 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <!--
-    New Coffee-Shop Theme Palette
-    -->
-    <color name="coffee_brown_dark">#4E342E</color>
-    <color name="coffee_brown_medium">#6D4C41</color>
-    <color name="coffee_cream">#F5EFE6</color>
-    <color name="coffee_accent_amber">#FFAB40</color>
+    <!-- Professional Coffee Theme Palette -->
+    <color name="coffee_primary">#3E2723</color> <!-- Deep Brown -->
+    <color name="coffee_primary_variant">#1B0000</color> <!-- Darker Brown -->
+    <color name="coffee_secondary">#795548</color> <!-- Medium Brown -->
+    <color name="coffee_accent">#D7CCC8</color> <!-- Light Brown/Beige for nice contrast -->
+    <color name="coffee_cream_background">#F5F5F5</color> <!-- White Smoke / Very Light Grey-Cream -->
 
-    <!-- Text Colors -->
-    <color name="text_color_primary">#3E2723</color>
-    <color name="text_color_secondary">#795548</color>
+    <color name="coffee_surface">#FFFFFF</color>
+    <color name="coffee_on_primary">#FFFFFF</color>
+    <color name="coffee_on_secondary">#FFFFFF</color>
+    <color name="coffee_on_background">#212121</color>
+    <color name="coffee_on_surface">#212121</color>
 
-    <!-- Status Colors  -->
-    <color name="status_available">#689F38</color>
-    <color name="status_occupied">#D32F2F</color>
-    <color name="status_reserved">#FFA000</color>
+    <!-- Semantic Colors -->
+    <color name="status_available">#4CAF50</color> <!-- Green -->
+    <color name="status_occupied">#F44336</color> <!-- Red -->
+    <color name="status_reserved">#FF9800</color> <!-- Orange -->
+    
+    <!-- Legacy Mappings for backward compatibility if needed, but transitioning to above -->
+    <color name="coffee_brown_dark">@color/coffee_primary</color>
+    <color name="coffee_brown_medium">@color/coffee_secondary</color>
+    <color name="coffee_cream">@color/coffee_cream_background</color>
+    <color name="coffee_accent_amber">@color/coffee_accent</color>
+    
+    <color name="text_color_primary">@color/coffee_on_background</color>
+    <color name="text_color_secondary">#757575</color>
 
-
-    <color name="fondo">#F1E5D1</color>
-    <color name="rosa_suave">#DBB5B5</color>
-    <color name="rosa_letra">#C39898</color>
-    <color name="rosa_fuerte">#987070</color>
+    <color name="fondo">@color/coffee_cream_background</color>
+    <color name="rosa_suave">#EFEBE9</color>
+    <color name="rosa_letra">#8D6E63</color>
+    <color name="rosa_fuerte">#5D4037</color>
 
     <!-- Mesa disponible -->
-    <color name="verde">#7CB342</color>
+    <color name="verde">@color/status_available</color>
     <!-- Mesa ocupada -->
-    <color name="rojo">#C62828</color>
+    <color name="rojo">@color/status_occupied</color>
     <!-- Mesa reservada -->
-    <color name="mesa_reservada">#F9A825</color>
+    <color name="mesa_reservada">@color/status_reserved</color>
 </resources>

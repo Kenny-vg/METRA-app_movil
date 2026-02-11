@@ -2,7 +2,7 @@ package com.softnamic.proyectointegradorii
 
 import android.os.Bundle
 import android.widget.ArrayAdapter
-import android.widget.Spinner
+import android.widget.AutoCompleteTextView
 
 class RegistrarClienteActivity : BaseActivity() {
 
@@ -10,29 +10,27 @@ class RegistrarClienteActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registrar_cliente)
 
-        // Le indicamos al menú inferior que estamos en la pantalla de "Perfil"
+        // Le indicamos al menú inferior que estamos en la pantalla de "Perfil" (assumed context)
+        // Adjust if necessary based on actual tab index, but keeping as is for now
         configurarMenuInferior(R.id.bottom_profile)
 
-        // SPINNERS
-        val spNumeroPersonas = findViewById<Spinner>(R.id.spNumeroPersonas)
-        val spMesa = findViewById<Spinner>(R.id.spMesa)
-        val spZona = findViewById<Spinner>(R.id.spZona)
+        // DROPDOWNS (Exposed Dropdown Menus)
+        val spNumeroPersonas = findViewById<AutoCompleteTextView>(R.id.spNumeroPersonas)
+        val spMesa = findViewById<AutoCompleteTextView>(R.id.spMesa)
+        val spZona = findViewById<AutoCompleteTextView>(R.id.spZona)
 
         val personas = arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "10")
         val mesas = arrayOf("Mesa 1", "Mesa 2", "Mesa 3", "Mesa 4")
         val zona = arrayOf("Fumadores", "Fiesta", "Otros")
 
-        // Usamos los adapters personalizados para mantener la consistencia
-        val adapterPersonas = ArrayAdapter(this, R.layout.spinner_item_custom, personas)
-        adapterPersonas.setDropDownViewResource(R.layout.spinner_dropdown_item_custom)
-        spNumeroPersonas.adapter = adapterPersonas
+        // Adapters for AutoCompleteTextView
+        val adapterPersonas = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, personas)
+        spNumeroPersonas.setAdapter(adapterPersonas)
 
-        val adapterMesas = ArrayAdapter(this, R.layout.spinner_item_custom, mesas)
-        adapterMesas.setDropDownViewResource(R.layout.spinner_dropdown_item_custom)
-        spMesa.adapter = adapterMesas
+        val adapterMesas = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, mesas)
+        spMesa.setAdapter(adapterMesas)
 
-        val adapterZona = ArrayAdapter(this, R.layout.spinner_item_custom, zona)
-        adapterZona.setDropDownViewResource(R.layout.spinner_dropdown_item_custom)
-        spZona.adapter = adapterZona
+        val adapterZona = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, zona)
+        spZona.setAdapter(adapterZona)
     }
 }

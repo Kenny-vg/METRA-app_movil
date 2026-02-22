@@ -6,6 +6,7 @@ import android.widget.Spinner
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.softnamic.proyectointegradorii.R
+import com.softnamic.proyectointegradorii.core.base.BaseActivity
 
 class MesasActivity : BaseActivity() {
 

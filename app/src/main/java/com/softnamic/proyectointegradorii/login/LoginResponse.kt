@@ -1,4 +1,4 @@
-package com.softnamic.proyectointegradorii.data.model
+package com.softnamic.proyectointegradorii.login
 
 data class LoginResponse(
     val success: Boolean,

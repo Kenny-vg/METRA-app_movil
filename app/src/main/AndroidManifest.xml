@@ -17,7 +17,7 @@
 
         <!-- SPLASH SCREEN -->
         <activity
-            android:name=".SplashActivity"
+            android:name=".splash.SplashActivity"
             android:exported="true"
             android:theme="@style/Theme.App.Starting"> <!-- TEMA ESPECIAL APLICADO AQUÍ -->
             <intent-filter>
@@ -28,18 +28,18 @@
 
         <!-- LOGIN -->
         <activity
-            android:name=".LoginActivity"
+            android:name=".login.LoginActivity"
             android:exported="false"/>
 
         <!-- INICIO -->
         <activity
-            android:name=".InicioActivity"
+            android:name=".inicio.InicioActivity"
             android:exported="true" />
 
         <!-- DEMÁS PANTALLAS -->
         <activity android:name=".reservas.ReservasActivity" />
         <activity android:name=".mesas.MesasActivity" />
-        <activity android:name=".RegistrarClienteActivity" />
+        <activity android:name=".wailkin.RegistrarClienteActivity" />
 
         <meta-data
             android:name="preloaded_fonts"

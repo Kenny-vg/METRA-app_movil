@@ -1,9 +1,11 @@
-package com.softnamic.proyectointegradorii
+package com.softnamic.proyectointegradorii.core.base
 
 import android.content.Intent
-import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.softnamic.proyectointegradorii.R
+import com.softnamic.proyectointegradorii.wailkin.RegistrarClienteActivity
+import com.softnamic.proyectointegradorii.inicio.InicioActivity
 import com.softnamic.proyectointegradorii.mesas.MesasActivity
 import com.softnamic.proyectointegradorii.reservas.ReservasActivity
 

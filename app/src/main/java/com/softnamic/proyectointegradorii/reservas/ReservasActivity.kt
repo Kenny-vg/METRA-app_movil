@@ -5,8 +5,8 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.softnamic.proyectointegradorii.BaseActivity
-import com.softnamic.proyectointegradorii.DataMock
+import com.softnamic.proyectointegradorii.core.base.BaseActivity
+import com.softnamic.proyectointegradorii.core.pruebas.DataMock
 import com.softnamic.proyectointegradorii.R
 
 class ReservasActivity : BaseActivity() {

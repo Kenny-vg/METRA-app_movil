@@ -1,4 +1,4 @@
-package com.softnamic.proyectointegradorii.network
+package com.softnamic.proyectointegradorii.core.network
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

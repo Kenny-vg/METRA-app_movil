@@ -1,4 +1,4 @@
-package com.softnamic.proyectointegradorii
+package com.softnamic.proyectointegradorii.wailkin
 
 import android.os.Bundle
 import android.widget.ArrayAdapter
@@ -6,6 +6,8 @@ import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.Toast
 import com.google.android.material.textfield.TextInputEditText
+import com.softnamic.proyectointegradorii.R
+import com.softnamic.proyectointegradorii.core.base.BaseActivity
 
 class RegistrarClienteActivity : BaseActivity() {
 
@@ -20,10 +22,17 @@ class RegistrarClienteActivity : BaseActivity() {
         val btnConfirmar = findViewById<Button>(R.id.btn_confirmar)
         val etNombre = findViewById<TextInputEditText>(R.id.etNombre)
 
-        val adapterPersonas = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, (1..10).map { it.toString() })
+        val adapterPersonas = ArrayAdapter(
+            this,
+            android.R.layout.simple_dropdown_item_1line,
+            (1..10).map { it.toString() })
         spNumeroPersonas.setAdapter(adapterPersonas)
 
-        val adapterZonas = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, listOf("Fumadores", "No fumadores", "Terraza"))
+        val adapterZonas = ArrayAdapter(
+            this,
+            android.R.layout.simple_dropdown_item_1line,
+            listOf("Fumadores", "No fumadores", "Terraza")
+        )
         spZona.setAdapter(adapterZonas)
 
         btnConfirmar.setOnClickListener {

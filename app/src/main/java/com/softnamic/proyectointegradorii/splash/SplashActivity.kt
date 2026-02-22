@@ -1,4 +1,4 @@
-package com.softnamic.proyectointegradorii
+package com.softnamic.proyectointegradorii.splash
 
 import android.animation.Animator
 import android.annotation.SuppressLint
@@ -7,6 +7,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.softnamic.proyectointegradorii.databinding.ActivitySplashBinding
+import com.softnamic.proyectointegradorii.login.LoginActivity
 
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
@@ -25,9 +26,9 @@ class SplashActivity : AppCompatActivity() {
         val lottieView = binding.lottieAnimationView
         lottieView.setAnimation("coffee_time.json")
         lottieView.loop(false)
-        
+
         // --- DURACIÓN AJUSTADA --- (Más lento = dura más)
-        lottieView.speed = 0.7f 
+        lottieView.speed = 0.6f
 
         lottieView.addAnimatorListener(object : Animator.AnimatorListener {
             override fun onAnimationStart(animation: Animator) {}
@@ -41,7 +42,7 @@ class SplashActivity : AppCompatActivity() {
             override fun onAnimationCancel(animation: Animator) {}
             override fun onAnimationRepeat(animation: Animator) {}
         })
-        
+
         // Inicia la animación
         lottieView.playAnimation()
     }

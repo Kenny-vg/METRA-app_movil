@@ -1,4 +1,4 @@
-package com.softnamic.proyectointegradorii
+package com.softnamic.proyectointegradorii.core.pruebas
 
 import com.softnamic.proyectointegradorii.reservas.Reserva
 

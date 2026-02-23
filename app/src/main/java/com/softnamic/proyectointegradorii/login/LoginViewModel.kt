@@ -22,7 +22,8 @@ class LoginViewModel : ViewModel() {
             return
         }
 
-        if (!email.endsWith("@sidugow.com", ignoreCase = true)) {
+        val emailRegex = "^[A-Za-z](.*)([@]{1})(.{1,})(\\.)(.{1,})".toRegex()
+        if (!email.matches(emailRegex)) {
             _state.value = LoginState.EmailError("Formato de correo inválido. Ejemplo: correo@dominio.com")
             return
         }
@@ -31,6 +32,8 @@ class LoginViewModel : ViewModel() {
             _state.value = LoginState.PasswordError("La contraseña es obligatoria")
             return
         }
+
+
 
         _state.value = LoginState.Loading
 
@@ -43,11 +46,28 @@ class LoginViewModel : ViewModel() {
                 when (response.code()) {
 
                     200 -> {
+
                         val body = response.body()
+
                         if (body?.success == true) {
-                            _state.value =
-                                LoginState.Success(body.data?.token ?: "")
+
+                            val token = body.data?.token ?: ""
+                            val role = body.data?.usuario?.role?.lowercase()?.trim() ?: ""
+
+                            val allowedRoles = listOf("gerente", "personal")
+
+                            if (allowedRoles.contains(role)) {
+
+                                _state.value = LoginState.Success(token, role)
+
+                            } else {
+
+                                _state.value =
+                                    LoginState.Error("No tienes permisos para ingresar")
+                            }
+
                         } else {
+
                             _state.value =
                                 LoginState.Error(body?.message ?: "Error")
                         }

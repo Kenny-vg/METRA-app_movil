@@ -50,8 +50,10 @@ class LoginActivity : AppCompatActivity() {
 
                 is LoginState.Success -> {
                     val prefs = getSharedPreferences("MY_APP", MODE_PRIVATE)
-                    prefs.edit().putString("TOKEN", state.token).apply()
-
+                    prefs.edit()
+                        .putString("TOKEN", state.token)
+                        .putString("ROLE", state.role)
+                        .apply()
                     startActivity(Intent(this, InicioActivity::class.java))
                     finish()
                 }

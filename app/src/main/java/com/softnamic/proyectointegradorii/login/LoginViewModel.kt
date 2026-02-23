@@ -15,6 +15,23 @@ class LoginViewModel : ViewModel() {
 
     fun login(email: String, password: String) {
 
+        _state.value = LoginState.Idle
+
+        if (email.isBlank()) {
+            _state.value = LoginState.EmailError("El correo es obligatorio")
+            return
+        }
+
+        if (!email.endsWith("@sidugow.com", ignoreCase = true)) {
+            _state.value = LoginState.EmailError("Formato de correo inválido. Ejemplo: correo@dominio.com")
+            return
+        }
+
+        if (password.isBlank()) {
+            _state.value = LoginState.PasswordError("La contraseña es obligatoria")
+            return
+        }
+
         _state.value = LoginState.Loading
 
         viewModelScope.launch {

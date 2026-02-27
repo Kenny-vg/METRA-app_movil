@@ -27,6 +27,39 @@ object DataMock {
             zona = "Terraza",
             comentarios = "Silla para bebé",
             mesa = "Mesa 5"
+        ),
+        Reserva(
+            nombre = "Ana Torres",
+            hora = "2:15 pm",
+            personas = 5,
+            zona = "Terraza",
+            comentarios = "Silla para bebé",
+            mesa = "Mesa 5"
+        ),
+        Reserva(
+            nombre = "Ana Torres",
+            hora = "2:15 pm",
+            personas = 5,
+            zona = "Terraza",
+            comentarios = "Silla para bebé",
+            mesa = "Mesa 5"
+        ),
+        Reserva(
+            nombre = "Ana Torres",
+            hora = "2:15 pm",
+            personas = 5,
+            zona = "Terraza",
+            comentarios = "Silla para bebé",
+            mesa = "Mesa 5"
+        ),
+        Reserva(
+            nombre = "Ana Torres",
+            hora = "2:15 pm",
+            personas = 5,
+            zona = "Terraza",
+            comentarios = "Silla para bebé",
+            mesa = "Mesa 5"
         )
+
     )
 }

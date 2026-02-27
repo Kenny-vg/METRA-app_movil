@@ -53,12 +53,12 @@ class LoginViewModel : ViewModel() {
 
                             val token = body.data?.token ?: ""
                             val role = body.data?.usuario?.role?.lowercase()?.trim() ?: ""
-
+                            val name = body.data?.usuario?.name ?: ""
                             val allowedRoles = listOf("gerente", "personal")
 
                             if (allowedRoles.contains(role)) {
 
-                                _state.value = LoginState.Success(token, role)
+                                _state.value = LoginState.Success(token, role, name)
 
                             } else {
 

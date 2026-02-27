@@ -53,6 +53,7 @@ class LoginActivity : AppCompatActivity() {
                     prefs.edit()
                         .putString("TOKEN", state.token)
                         .putString("ROLE", state.role)
+                        .putString("NAME", state.name)
                         .apply()
                     startActivity(Intent(this, InicioActivity::class.java))
                     finish()

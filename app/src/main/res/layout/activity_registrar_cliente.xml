@@ -15,35 +15,33 @@
         android:layout_height="wrap_content"
         android:background="@color/coffee_brown_dark"
         android:titleTextColor="@android:color/white"
-        app:navigationIconTint="@color/fondo"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <!-- CONTENIDO SCROLLABLE -->
-    <ScrollView
-        android:id="@+id/scrollContent"
-        android:layout_width="match_parent"
+
+    <LinearLayout
+        android:id="@+id/contentLayout"
+        android:layout_width="0dp"
         android:layout_height="0dp"
+        android:orientation="vertical"
+        android:padding="24dp"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:layout_constraintBottom_toTopOf="@id/bottom_navigation">
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="24dp">
-
+            <!-- TITULO DEBAJO DEL TOOLBAR -->
             <TextView
+                android:id="@+id/tvTitulo"
                 style="@style/TextAppearance.App.Headline1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
-                android:gravity="center"
-                android:text="REGISTRAR"
                 android:fontFamily="@font/lora"
-                android:textColor="@color/coffee_primary"
-                android:textStyle="bold"/>
+                android:text="REGISTRAR"
+                android:textAlignment="center"
+                app:layout_constraintTop_toBottomOf="@id/toolbar"/>
+
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
@@ -152,7 +150,7 @@
             </com.google.android.material.card.MaterialCardView>
 
         </LinearLayout>
-    </ScrollView>
+
 
     <!-- MENÚ INFERIOR -->
     <include

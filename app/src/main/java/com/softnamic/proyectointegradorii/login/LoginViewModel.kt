@@ -79,8 +79,18 @@ class LoginViewModel : ViewModel() {
                     }
 
                     else -> {
-                        _state.value =
-                            LoginState.Error("Error ${response.code()}")
+                        val errorBody = response.errorBody()?.string()
+
+                        val message = try {
+                            val json = org.json.JSONObject(errorBody ?: "")
+                            json.optString("message", "Error ${response.code()}")
+                        } catch (e: Exception) {
+                            "Error ${response.code()}"
+                        }
+
+                        println("ERROR BACKEND: $message")
+
+                        _state.value = LoginState.Error(message)
                     }
                 }
 

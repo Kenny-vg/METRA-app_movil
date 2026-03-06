@@ -10,5 +10,6 @@ data class Mesa(
 
 enum class EstadoMesa {
     DISPONIBLE,
-    OCUPADA
+    OCUPADA,
+    RESERVADA
 }

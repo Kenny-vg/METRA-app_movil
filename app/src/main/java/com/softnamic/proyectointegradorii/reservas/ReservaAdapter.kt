@@ -18,6 +18,7 @@ class ReservaAdapter(
         val mesa: TextView = view.findViewById(R.id.tvMesa)
         val zona: TextView = view.findViewById(R.id.tvZona)
         val estado: TextView = view.findViewById(R.id.tvEstado)
+        val txtPromocion: TextView = view.findViewById(R.id.txtPromocion)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -36,16 +37,26 @@ class ReservaAdapter(
         when (reserva.estado) {
             "Llegó" -> {
                 holder.estado.text = "Llegó"
-                holder.itemView.setBackgroundColor(Color.parseColor("#D0F0C0")) // Verde claro
+                holder.estado.setTextColor(Color.parseColor("#388E3C")) // Dark green
+                (holder.itemView as com.google.android.material.card.MaterialCardView).setCardBackgroundColor(Color.parseColor("#E8F5E9")) // Very light green
             }
             "No llegó" -> {
                 holder.estado.text = "No llegó"
-                holder.itemView.setBackgroundColor(Color.parseColor("#FFD0D0")) // Rojo claro
+                holder.estado.setTextColor(Color.parseColor("#D32F2F")) // Dark red
+                (holder.itemView as com.google.android.material.card.MaterialCardView).setCardBackgroundColor(Color.parseColor("#FFEBEE")) // Very light red
             }
             else -> {
                 holder.estado.text = "Pendiente"
-                holder.itemView.setBackgroundColor(Color.TRANSPARENT)
+                holder.estado.setTextColor(Color.parseColor("#6B6B6B"))
+                (holder.itemView as com.google.android.material.card.MaterialCardView).setCardBackgroundColor(Color.WHITE)
             }
+        }
+
+        holder.txtPromocion.text = reserva.promocion
+        if (reserva.promocion == "Sin promoción") {
+            holder.txtPromocion.visibility = View.GONE
+        } else {
+            holder.txtPromocion.visibility = View.VISIBLE
         }
 
         holder.itemView.setOnClickListener {

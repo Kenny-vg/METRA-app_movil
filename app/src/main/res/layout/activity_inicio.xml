@@ -20,7 +20,7 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="?attr/actionBarSize"
             android:background="@color/coffee_brown_dark"
             android:titleTextColor="@android:color/white"
             app:navigationIconTint="@color/fondo"
@@ -81,9 +81,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="4dp"
-                    app:cardBackgroundColor="@color/coffee_secondary">
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="2dp"
+                    app:cardBackgroundColor="@color/coffee_surface">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -96,7 +96,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Reservas del día"
-                            android:textColor="@color/white"
+                            android:textColor="@color/coffee_on_surface"
                             android:fontFamily="@font/lora"/>
 
                         <View
@@ -112,7 +112,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="10"
-                            android:textColor="@color/white"
+                            android:textColor="@color/coffee_primary"
                             android:textStyle="bold" />
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
@@ -121,9 +121,9 @@
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="4dp"
-                    app:cardBackgroundColor="@color/coffee_secondary">
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="2dp"
+                    app:cardBackgroundColor="@color/coffee_surface">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -136,7 +136,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Mesas disponibles"
-                            android:textColor="@color/white"
+                            android:textColor="@color/coffee_on_surface"
                             android:fontFamily="@font/lora" />
 
                         <View
@@ -152,7 +152,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="15"
-                            android:textColor="@color/white"
+                            android:textColor="@color/coffee_primary"
                             android:textStyle="bold" />
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>

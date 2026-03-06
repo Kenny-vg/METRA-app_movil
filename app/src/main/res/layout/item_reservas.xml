@@ -7,8 +7,9 @@
     android:layout_marginEnd="@dimen/spacing_medium"
     android:layout_marginTop="@dimen/spacing_small"
     android:layout_marginBottom="@dimen/spacing_small"
-    app:cardCornerRadius="@dimen/card_corner_radius"
-    app:cardElevation="4dp">
+    app:cardCornerRadius="20dp"
+    app:cardElevation="2dp"
+    app:cardBackgroundColor="@color/coffee_surface">
 
     <LinearLayout
         android:orientation="vertical"
@@ -20,6 +21,7 @@
             android:id="@+id/tvNombre"
             android:textStyle="bold"
             android:textSize="18sp"
+            android:textColor="@color/coffee_on_surface"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
@@ -39,6 +41,18 @@
             android:layout_height="wrap_content"
             android:textStyle="italic"
             android:layout_marginTop="4dp"/>
+
+        <TextView
+            android:id="@+id/txtPromocion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/badge_promocion"
+            android:text="Promoción"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="12sp"
+            android:visibility="gone" />
 
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

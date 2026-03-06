@@ -7,5 +7,6 @@ data class Reserva(
     val zona: String,
     val comentarios: String?,
     var mesa: String?,
+    var promocion: String = "Sin promoción",
     var estado: String? = null // Puede ser "Llegó", "No llegó", etc.
 )

@@ -10,7 +10,8 @@ object DataMock {
             personas = 4,
             zona = "Fumadores",
             comentarios = "Mesa cerca de la ventana",
-            mesa = "Mesa 3"
+            mesa = "Mesa 3",
+            promocion = "2x1 en bebidas"
         ),
         Reserva(
             nombre = "Juan Pérez",
@@ -18,7 +19,8 @@ object DataMock {
             personas = 2,
             zona = "No fumadores",
             comentarios = "Cumpleaños",
-            mesa = null
+            mesa = null,
+            promocion = "10% de descuento en postres"
         ),
         Reserva(
             nombre = "Ana Torres",

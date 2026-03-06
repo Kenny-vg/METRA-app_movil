@@ -26,6 +26,6 @@ androidx-lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecy
 
 
 [plugins]
-androidApplication = { id = "com.android.application", version = "8.4.1" }
-jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version = "1.9.0" }
+android-application = { id = "com.android.application", version = "8.4.1" }
+jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version = "1.9.0" }
 

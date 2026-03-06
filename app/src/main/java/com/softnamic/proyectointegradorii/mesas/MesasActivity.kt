@@ -14,6 +14,9 @@ class MesasActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mesas)
         
+        // Configurar Drawer
+        configurarToolbarYDrawer()
+        
         // Le indicamos al menú inferior que estamos en la pantalla de "Mesas"
         configurarMenuInferior(R.id.bottom_tables)
 
@@ -25,7 +28,7 @@ class MesasActivity : BaseActivity() {
         val mesasFake = listOf(
             Mesa(1, "Mesa 1", 4, "Fumadores", EstadoMesa.DISPONIBLE),
             Mesa(2, "Mesa 2", 2, "No fumadores", EstadoMesa.OCUPADA),
-            Mesa(3, "Mesa 3", 6, "Fumadores", EstadoMesa.DISPONIBLE),
+            Mesa(3, "Mesa 3", 6, "Fumadores", EstadoMesa.RESERVADA),
             Mesa(4, "Mesa 4", 8, "Terraza", EstadoMesa.OCUPADA),
             Mesa(5, "Mesa 5", 4, "No fumadores", EstadoMesa.DISPONIBLE)
         )

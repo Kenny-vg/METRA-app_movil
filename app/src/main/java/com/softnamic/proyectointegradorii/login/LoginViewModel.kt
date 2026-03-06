@@ -95,8 +95,8 @@ class LoginViewModel : ViewModel() {
                 }
 
             } catch (e: Exception) {
-                _state.value =
-                    LoginState.Error("Error de conexión")
+                e.printStackTrace()
+                _state.value = LoginState.Error("Error: ${e.message}")
             }
         }
     }

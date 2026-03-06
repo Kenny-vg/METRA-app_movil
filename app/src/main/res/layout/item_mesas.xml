@@ -9,8 +9,9 @@
     android:layout_marginEnd="@dimen/spacing_medium"
     android:layout_marginTop="@dimen/spacing_small"
     android:layout_marginBottom="@dimen/spacing_small"
-    app:cardCornerRadius="@dimen/card_corner_radius"
-    app:cardElevation="4dp">
+    app:cardCornerRadius="20dp"
+    app:cardElevation="2dp"
+    app:cardBackgroundColor="@color/coffee_surface">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -23,6 +24,7 @@
             style="@style/TextAppearance.App.Headline2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:textColor="@color/coffee_on_surface"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toStartOf="@id/spinnerAccion"

@@ -1,15 +1,26 @@
 package com.softnamic.proyectointegradorii.core.base
 
 import android.content.Intent
+import android.view.MenuItem
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationView
 import com.softnamic.proyectointegradorii.R
-import com.softnamic.proyectointegradorii.wailkin.RegistrarClienteActivity
 import com.softnamic.proyectointegradorii.inicio.InicioActivity
+import com.softnamic.proyectointegradorii.login.LoginActivity
 import com.softnamic.proyectointegradorii.mesas.MesasActivity
 import com.softnamic.proyectointegradorii.reservas.ReservasActivity
+import com.softnamic.proyectointegradorii.wailkin.RegistrarClienteActivity
 
 open class BaseActivity : AppCompatActivity() {
+
+    // Variables for Navigation Drawer
+    protected lateinit var drawerLayout: DrawerLayout
+    protected lateinit var navView: NavigationView
+    protected lateinit var toggle: ActionBarDrawerToggle
 
     // Variable para guardar el ID del item del menú para ESTA activity en particular
     private var navItemId: Int = 0
@@ -57,5 +68,64 @@ open class BaseActivity : AppCompatActivity() {
             }
             true
         }
+    }
+
+    protected fun configurarToolbarYDrawer() {
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+
+        drawerLayout = findViewById(R.id.drawer_layout)
+        navView = findViewById(R.id.nav_view)
+
+        toggle = ActionBarDrawerToggle(
+            this,
+            drawerLayout,
+            toolbar,
+            R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close
+        )
+
+        drawerLayout.addDrawerListener(toggle)
+        toggle.drawerArrowDrawable.color = resources.getColor(R.color.white, theme)
+        toggle.syncState()
+
+        navView.setNavigationItemSelectedListener { menuItem ->
+            manejarDrawer(menuItem)
+            true
+        }
+    }
+
+    private fun manejarDrawer(menuItem: MenuItem) {
+        val intent = when (menuItem.itemId) {
+            R.id.navigation_home -> Intent(this, InicioActivity::class.java)
+            R.id.navigation_reservations -> Intent(this, ReservasActivity::class.java)
+            R.id.navigation_tables -> Intent(this, MesasActivity::class.java)
+            R.id.navigation_profile -> Intent(this, RegistrarClienteActivity::class.java)
+            R.id.navigation_logout -> {
+                val prefs = getSharedPreferences("MY_APP", MODE_PRIVATE)
+                prefs.edit().clear().apply()
+
+                startActivity(Intent(this, LoginActivity::class.java))
+                finishAffinity()
+                null
+            }
+            else -> null
+        }
+
+        intent?.let {
+            it.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+            startActivity(it)
+            overridePendingTransition(0, 0)
+        }
+
+        drawerLayout.closeDrawers()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (::toggle.isInitialized && toggle.onOptionsItemSelected(item)) {
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="20dp"
@@ -51,6 +52,16 @@
         android:text="Comentarios"
         android:paddingBottom="16dp"/>
 
+    <TextView
+        android:id="@+id/tvDetallePromocion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Promoción aplicada:\nSin promoción"
+        android:paddingTop="8dp"
+        android:paddingBottom="16dp"
+        android:textColor="@color/coffee_primary"
+        android:textStyle="bold|italic"/>
+
     <Spinner
         android:id="@+id/spAccion"
         android:layout_width="match_parent"
@@ -67,6 +78,6 @@
         android:textColor="@android:color/white"
         android:textStyle="bold"
         android:textSize="15sp"
-        android:backgroundTint="@android:color/holo_blue_dark"/>
+        app:backgroundTint="@color/coffee_primary"/>
 
 </LinearLayout>

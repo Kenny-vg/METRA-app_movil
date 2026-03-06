@@ -7,6 +7,7 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import android.content.res.ColorStateList
 import androidx.recyclerview.widget.RecyclerView
 import com.softnamic.proyectointegradorii.R
 import com.softnamic.proyectointegradorii.mesas.EstadoMesa
@@ -38,7 +39,7 @@ class MesasAdapter(
         when (mesa.estado) {
             EstadoMesa.DISPONIBLE -> {
                 holder.tvEstado.text = "Disponible"
-                holder.tvEstado.setBackgroundColor(
+                holder.tvEstado.backgroundTintList = ColorStateList.valueOf(
                     ContextCompat.getColor(
                         holder.itemView.context,
                         R.color.status_available
@@ -50,7 +51,7 @@ class MesasAdapter(
 
             EstadoMesa.OCUPADA -> {
                 holder.tvEstado.text = "Ocupada"
-                holder.tvEstado.setBackgroundColor(
+                holder.tvEstado.backgroundTintList = ColorStateList.valueOf(
                     ContextCompat.getColor(
                         holder.itemView.context,
                         R.color.status_occupied
@@ -58,6 +59,18 @@ class MesasAdapter(
                 )
 
                 setSpinner(holder.spinnerAccion, holder.itemView, "Liberar")
+            }
+
+            EstadoMesa.RESERVADA -> {
+                holder.tvEstado.text = "Reservada"
+                holder.tvEstado.backgroundTintList = ColorStateList.valueOf(
+                    ContextCompat.getColor(
+                        holder.itemView.context,
+                        R.color.status_reserved
+                    )
+                )
+
+                setSpinner(holder.spinnerAccion, holder.itemView, "Ver Detalles")
             }
         }
     }

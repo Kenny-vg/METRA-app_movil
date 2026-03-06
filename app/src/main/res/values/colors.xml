@@ -4,25 +4,25 @@
     <color name="white">#FFFFFFFF</color>
 
     <!-- Professional Coffee Theme Palette -->
-    <color name="coffee_primary">#3E2723</color> <!-- Deep Brown -->
-    <color name="coffee_primary_variant">#1B0000</color> <!-- Darker Brown -->
-    <color name="coffee_secondary">#795548</color> <!-- Medium Brown -->
-    <color name="coffee_accent">#D7CCC8</color> <!-- Light Brown/Beige for nice contrast -->
-    <color name="coffee_cream_background">#F5F5F5</color> <!-- White Smoke / Very Light Grey-Cream -->
+    <color name="coffee_primary">#6D4C41</color> <!-- Medium Coffee -->
+    <color name="coffee_primary_variant">#4E342E</color> <!-- Dark Coffee -->
+    <color name="coffee_secondary">#4E342E</color> <!-- Dark Coffee -->
+    <color name="coffee_accent">#C9A15A</color> <!-- Gold -->
+    <color name="coffee_cream_background">#F5F2EC</color> <!-- METRA Beige/Cream -->
 
     <color name="coffee_surface">#FFFFFF</color>
     <color name="coffee_on_primary">#FFFFFF</color>
     <color name="coffee_on_secondary">#FFFFFF</color>
-    <color name="coffee_on_background">#212121</color>
-    <color name="coffee_on_surface">#212121</color>
+    <color name="coffee_on_background">#2E2E2E</color>
+    <color name="coffee_on_surface">#2E2E2E</color>
 
     <!-- Semantic Colors -->
     <color name="status_available">#4CAF50</color> <!-- Green -->
     <color name="status_occupied">#F44336</color> <!-- Red -->
-    <color name="status_reserved">#FF9800</color> <!-- Orange -->
+    <color name="status_reserved">@color/coffee_accent</color> <!-- Gold -->
     
     <!-- Legacy Mappings for backward compatibility if needed, but transitioning to above -->
-    <color name="coffee_brown_dark">@color/coffee_primary</color>
+    <color name="coffee_brown_dark">@color/coffee_primary_variant</color>
     <color name="coffee_brown_medium">@color/coffee_secondary</color>
     <color name="coffee_cream">@color/coffee_cream_background</color>
     <color name="coffee_accent_amber">@color/coffee_accent</color>

@@ -15,6 +15,7 @@ class RegistrarClienteActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registrar_cliente)
 
+        configurarToolbarYDrawer()
         configurarMenuInferior(R.id.bottom_profile)
 
         val spNumeroPersonas = findViewById<AutoCompleteTextView>(R.id.spNumeroPersonas)

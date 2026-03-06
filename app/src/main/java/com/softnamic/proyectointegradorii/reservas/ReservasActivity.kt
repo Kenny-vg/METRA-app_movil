@@ -18,6 +18,7 @@ class ReservasActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_reservas)
 
+        configurarToolbarYDrawer()
         configurarMenuInferior(R.id.bottom_reservations)
 
         recycler = findViewById(R.id.rvReservas)
@@ -44,6 +45,7 @@ class ReservasActivity : BaseActivity() {
         dialogView.findViewById<TextView>(R.id.tvDetalleZona).text = "Zona: ${reserva.zona}"
         dialogView.findViewById<TextView>(R.id.tvDetalleMesa).text = reserva.mesa ?: "Sin mesa asignada"
         dialogView.findViewById<TextView>(R.id.tvDetalleComentarios).text = reserva.comentarios ?: "Sin comentarios"
+        dialogView.findViewById<TextView>(R.id.tvDetallePromocion).text = "Promoción aplicada:\n${reserva.promocion}"
 
         val spinner = dialogView.findViewById<Spinner>(R.id.spAccion)
         val acciones = listOf("Asignar mesa", "Cancelar reservación", "Llegó", "No llegó")

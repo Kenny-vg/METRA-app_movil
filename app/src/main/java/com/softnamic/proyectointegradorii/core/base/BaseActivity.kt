@@ -14,8 +14,27 @@ import com.softnamic.proyectointegradorii.login.LoginActivity
 import com.softnamic.proyectointegradorii.mesas.MesasActivity
 import com.softnamic.proyectointegradorii.reservas.ReservasActivity
 import com.softnamic.proyectointegradorii.wailkin.RegistrarClienteActivity
+import com.softnamic.proyectointegradorii.core.data.DataUpdater
+import androidx.lifecycle.lifecycleScope
+import android.os.Bundle
+
+import com.softnamic.proyectointegradorii.core.data.RestaurantRepository
 
 open class BaseActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        
+        // Asegurarnos de que el repositorio tenga el token disponible globalmente
+        val prefs = getSharedPreferences("MY_APP", MODE_PRIVATE)
+        val token = prefs.getString("TOKEN", "") ?: ""
+        if (token.isNotEmpty()) {
+            RestaurantRepository.currentToken = token
+        }
+
+        // Iniciamos el actualizador global que corre en background
+        DataUpdater.startUpdating()
+    }
 
     // Variables for Navigation Drawer
     protected lateinit var drawerLayout: DrawerLayout

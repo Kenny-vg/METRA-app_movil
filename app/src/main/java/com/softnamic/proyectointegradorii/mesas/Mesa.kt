@@ -5,7 +5,8 @@ data class Mesa(
     val nombre: String,
     val capacidad: Int,
     val zona: String,
-    var estado: EstadoMesa
+    var estado: EstadoMesa,
+    val activo: Int = 1
 )
 
 enum class EstadoMesa {

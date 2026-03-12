@@ -5,13 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.softnamic.proyectointegradorii.R
 
 class ReservaAdapter(
-    private val lista: List<Reserva>,
     private val onClick: (Reserva) -> Unit
-) : RecyclerView.Adapter<ReservaAdapter.ViewHolder>() {
+) : ListAdapter<Reserva, ReservaAdapter.ViewHolder>(ReservaDiffCallback()) {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val nombre: TextView = view.findViewById(R.id.tvNombre)
@@ -28,7 +29,7 @@ class ReservaAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val reserva = lista[position]
+        val reserva = getItem(position)
 
         holder.nombre.text = "${reserva.nombre} - ${reserva.hora}"
         holder.mesa.text = reserva.mesa ?: "Sin mesa asignada"
@@ -63,6 +64,16 @@ class ReservaAdapter(
             onClick(reserva)
         }
     }
+}
 
-    override fun getItemCount() = lista.size
+class ReservaDiffCallback : DiffUtil.ItemCallback<Reserva>() {
+    override fun areItemsTheSame(oldItem: Reserva, newItem: Reserva): Boolean {
+        // Suponiendo que la combinación de nombre y hora es única en este mockup
+        return oldItem.nombre == newItem.nombre && oldItem.hora == newItem.hora
+    }
+
+    override fun areContentsTheSame(oldItem: Reserva, newItem: Reserva): Boolean {
+        // En DataClasses, == compara todos los campos
+        return oldItem == newItem
+    }
 }

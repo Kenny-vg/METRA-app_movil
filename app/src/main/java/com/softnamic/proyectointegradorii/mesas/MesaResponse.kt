@@ -4,6 +4,6 @@ data class MesaResponse(
     val id: Int,
     val numero_mesa: Int,
     val capacidad: Int,
-    val activo: Int? = 1,
+    val activo: Any? = null,
     val zona: ZonaResponse
 )

@@ -28,7 +28,12 @@ class MesasViewModel : ViewModel() {
 
     // Mesas filtradas
     val mesasFiltradas: StateFlow<List<Mesa>> = combine(todasLasMesas, _zonaSeleccionada) { mesas, zona ->
-        if (zona == "Todas") mesas else mesas.filter { it.zona == zona }
+        if (zona == "Todas") {
+            mesas
+        } else {
+            val zonaLimpia = zona.replace(" (SUSPENDIDA)", "")
+            mesas.filter { it.zona.replace(" (SUSPENDIDA)", "") == zonaLimpia }
+        }
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),

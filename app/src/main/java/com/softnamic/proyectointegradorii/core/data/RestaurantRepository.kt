@@ -13,57 +13,85 @@ import kotlinx.coroutines.flow.asStateFlow
 object RestaurantRepository {
     private const val TAG = "RestaurantRepo"
 
+    private fun parseActivo(value: Any?): Int {
+        return when (value) {
+            is Number -> value.toInt()
+            is Boolean -> if (value) 1 else 0
+            is String -> value.toDoubleOrNull()?.toInt() ?: 1
+            else -> 1 // default
+        }
+    }
+
     private val _mesas = MutableStateFlow<List<Mesa>>(emptyList())
     val mesas: StateFlow<List<Mesa>> = _mesas.asStateFlow()
-
-    private val _reservas = MutableStateFlow<List<Reserva>>(emptyList())
-    val reservas: StateFlow<List<Reserva>> = _reservas.asStateFlow()
 
     private val _zonas = MutableStateFlow<List<String>>(listOf("Todas"))
     val zonas: StateFlow<List<String>> = _zonas.asStateFlow()
 
-    // @Volatile asegura que el DataUpdater vea el token actualizado al instante
+    private val _reservas = MutableStateFlow<List<Reserva>>(emptyList())
+    val reservas: StateFlow<List<Reserva>> = _reservas.asStateFlow()
+
     @Volatile
     var currentToken: String = ""
 
     suspend fun fetchMesasYZonas() {
         if (currentToken.isEmpty()) {
-            Log.e(TAG, "¡ALERTA!: Intentando actualizar sin token. Abortando.")
+            Log.e(TAG, "❌ TOKEN VACÍO - No se puede consultar la API")
             return
         }
         
         val authHeader = "Bearer $currentToken"
-        Log.d(TAG, "Iniciando descarga de datos de la API...")
 
         try {
-            // 1. Zonas
+            // 1. ZONAS
             val resZonas = RetrofitClient.instance.getZonas(authHeader)
             if (resZonas.isSuccessful) {
                 val zonasApi = resZonas.body()?.data ?: emptyList()
-                val zonasActivas = zonasApi.filter { it.activo == 1 }.map { it.nombre_zona }
-                
-                val nuevasZonas = mutableListOf("Todas")
-                nuevasZonas.addAll(zonasActivas)
-
-                if (_zonas.value != nuevasZonas) {
-                    _zonas.value = nuevasZonas
-                    Log.i(TAG, "Zonas actualizadas en tiempo real: $nuevasZonas")
+                val listaNombres = mutableListOf("Todas")
+                zonasApi.forEach { 
+                    val isActivo = parseActivo(it.activo) == 1 && !it.nombre_zona.contains("(SUSPENDIDA)", ignoreCase = true)
+                    val nombreLimpio = it.nombre_zona.replace(" (SUSPENDIDA)", "")
+                    val nombre = if (isActivo) nombreLimpio else "$nombreLimpio (SUSPENDIDA)"
+                    listaNombres.add(nombre)
                 }
+                
+                if (_zonas.value != listaNombres) {
+                    _zonas.value = ArrayList(listaNombres)
+                    Log.i(TAG, "✅ Zonas actualizadas: ${listaNombres.size}")
+                }
+            } else {
+                Log.e(TAG, "❌ Error API Zonas: ${resZonas.code()} - ${resZonas.message()}")
             }
 
-            // 2. Mesas
+            // 2. MESAS
             val resMesas = RetrofitClient.instance.getMesas(authHeader)
             if (resMesas.isSuccessful) {
                 val mesasApi = resMesas.body()?.data ?: emptyList()
-                val nuevasMesas = mesasApi.map {
-                    val isActivo = if (it.activo == 1 && it.zona.activo == 1) 1 else 0
-                    Mesa(it.id, "Mesa ${it.numero_mesa}", it.capacidad, it.zona.nombre_zona, EstadoMesa.DISPONIBLE, isActivo)
+                val nuevasMesas = mesasApi.map { m ->
+                    val zonaActiva = parseActivo(m.zona.activo) == 1 && !m.zona.nombre_zona.contains("(SUSPENDIDA)", ignoreCase = true)
+                    val mesaActiva = parseActivo(m.activo) == 1
+                    val activa = (mesaActiva && zonaActiva)
+                    
+                    Log.d(TAG, "Mesa MAP: num=${m.numero_mesa}, activoObj=${m.activo}, mesaActiva=${mesaActiva}, zonaActivaObj=${m.zona.activo}, zonaActiva=${zonaActiva}")
+                    
+                    val nombreZonaLimpio = m.zona.nombre_zona.replace(" (SUSPENDIDA)", "")
+                    Mesa(
+                        id = m.id,
+                        nombre = "Mesa ${m.numero_mesa}",
+                        capacidad = m.capacidad,
+                        zona = if (zonaActiva) nombreZonaLimpio else "$nombreZonaLimpio (SUSPENDIDA)",
+                        estado = EstadoMesa.DISPONIBLE,
+                        activo = if (activa) 1 else 0
+                    )
                 }
-                _mesas.value = nuevasMesas
-                Log.d(TAG, "Mesas actualizadas en tiempo real: ${nuevasMesas.size}")
+                _mesas.value = ArrayList(nuevasMesas)
+                Log.d(TAG, "✅ Mesas sincronizadas: ${nuevasMesas.size}")
+            } else {
+                Log.e(TAG, "❌ Error API Mesas: ${resMesas.code()} - ${resMesas.message()} - ${resMesas.errorBody()?.string()}")
             }
         } catch (e: Exception) {
-            Log.e(TAG, "Error fatal de red: ${e.message}")
+            Log.e(TAG, "❌ ERROR FATAL RED: ${e.javaClass.simpleName} - ${e.message}")
+            e.printStackTrace()
         }
     }
 

@@ -9,6 +9,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.textfield.TextInputEditText
 import com.softnamic.proyectointegradorii.R
 import com.softnamic.proyectointegradorii.inicio.InicioActivity
+import com.softnamic.proyectointegradorii.core.data.RestaurantRepository
+import com.softnamic.proyectointegradorii.core.data.DataUpdater
 
 class LoginActivity : AppCompatActivity() {
 
@@ -39,41 +41,33 @@ class LoginActivity : AppCompatActivity() {
     private fun observeViewModel() {
         viewModel.state.observe(this) { state ->
 
-            // Reset errors
             etEmail.error = null
             etPassword.error = null
 
             when (state) {
-                is LoginState.Loading -> {
-                    // mostrar progressBar
-                }
+                is LoginState.Loading -> { }
 
                 is LoginState.Success -> {
+                    // 1. Guardar en SharedPreferences
                     val prefs = getSharedPreferences("MY_APP", MODE_PRIVATE)
                     prefs.edit()
                         .putString("TOKEN", state.token)
                         .putString("ROLE", state.role)
                         .putString("NAME", state.name)
                         .apply()
+
+                    // 2. ACTUALIZAR EL REPOSITORIO Y EL UPDATER
+                    RestaurantRepository.currentToken = state.token
+                    DataUpdater.startUpdating()
+
                     startActivity(Intent(this, InicioActivity::class.java))
                     finish()
                 }
 
-                is LoginState.EmailError -> {
-                    etEmail.error = state.message
-                }
-
-                is LoginState.PasswordError -> {
-                    etPassword.error = state.message
-                }
-
-                is LoginState.Error -> {
-                    Toast.makeText(this, state.message, Toast.LENGTH_LONG).show()
-                }
-
-                is LoginState.Idle -> {
-                    // Nothing to do
-                }
+                is LoginState.EmailError -> { etEmail.error = state.message }
+                is LoginState.PasswordError -> { etPassword.error = state.message }
+                is LoginState.Error -> { Toast.makeText(this, state.message, Toast.LENGTH_LONG).show() }
+                is LoginState.Idle -> { }
             }
         }
     }

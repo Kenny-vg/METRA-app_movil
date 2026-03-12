@@ -42,6 +42,19 @@
             app:layout_constraintEnd_toEndOf="@id/tvMesaNombre"
             tools:text="Capacidad: 8 personas" />
 
+        <!-- Zona -->
+        <TextView
+            android:id="@+id/tvMesaZona"
+            style="@style/TextAppearance.App.Body1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:textColor="@color/text_color_secondary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvMesaCapacidad"
+            app:layout_constraintEnd_toEndOf="@id/tvMesaNombre"
+            tools:text="📍 Zona: Terraza" />
+
         <!-- Estado -->
         <TextView
             android:id="@+id/tvMesaEstado"
@@ -56,7 +69,7 @@
             android:paddingTop="@dimen/spacing_small"
             android:paddingBottom="@dimen/spacing_small"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvMesaCapacidad"
+            app:layout_constraintTop_toBottomOf="@id/tvMesaZona"
             tools:text="Disponible"
             tools:backgroundTint="@color/status_available"/>
 

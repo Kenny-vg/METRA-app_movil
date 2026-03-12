@@ -18,6 +18,7 @@ class MesasAdapter : ListAdapter<Mesa, MesasAdapter.MesaViewHolder>(MesaDiffCall
     inner class MesaViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvNombre: TextView = itemView.findViewById(R.id.tvMesaNombre)
         val tvCapacidad: TextView = itemView.findViewById(R.id.tvMesaCapacidad)
+        val tvZona: TextView = itemView.findViewById(R.id.tvMesaZona)
         val tvEstado: TextView = itemView.findViewById(R.id.tvMesaEstado)
         val spinnerAccion: Spinner = itemView.findViewById(R.id.spinnerAccion)
     }
@@ -33,6 +34,8 @@ class MesasAdapter : ListAdapter<Mesa, MesasAdapter.MesaViewHolder>(MesaDiffCall
 
         holder.tvNombre.text = mesa.nombre
         holder.tvCapacidad.text = "Capacidad: ${mesa.capacidad} personas"
+        val nombreZonaLimpio = mesa.zona.replace(" (SUSPENDIDA)", "", ignoreCase = true)
+        holder.tvZona.text = "📍 Zona: $nombreZonaLimpio"
 
         if (mesa.activo == 0) {
             holder.tvEstado.text = "Desactivada"

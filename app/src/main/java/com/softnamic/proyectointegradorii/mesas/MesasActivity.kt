@@ -68,7 +68,20 @@ class MesasActivity : BaseActivity() {
                         
                         // Mantener la selección actual
                         val currentSelection = viewModel.zonaSeleccionada.value
-                        val pos = zonas.indexOf(currentSelection)
+                        var pos = zonas.indexOf(currentSelection)
+                        
+                        // Si no lo encuentra, intentar buscar sin la etiqueta (SUSPENDIDA)
+                        if (pos < 0 && currentSelection != "Todas") {
+                            val currentLimpia = currentSelection.replace(" (SUSPENDIDA)", "")
+                            pos = zonas.indexOfFirst { it.replace(" (SUSPENDIDA)", "") == currentLimpia }
+                            
+                            // Si lo encontramos con otro nombre (ej. pasó a estar suspendida), 
+                            // actualizamos el viewModel para que coincida exactamente
+                            if (pos >= 0) {
+                                viewModel.seleccionarZona(zonas[pos])
+                            }
+                        }
+
                         if (pos >= 0) {
                             spinnerZona.setSelection(pos, false)
                         }

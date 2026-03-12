@@ -8,5 +8,5 @@
     android:ellipsize="marquee"
     android:singleLine="true"
     android:textAlignment="textStart"
-    android:textColor="@color/black"
+    android:textColor="?attr/colorOnSurface"
     android:textSize="@dimen/font_size_body" />

@@ -15,13 +15,12 @@ interface ApiService {
         @Field("password") password: String
     ): Response<LoginResponse>
 
-    // Probamos con gerente de nuevo, ya que staff dio 404
-    @GET("api/gerente/mesas")
+    @GET("api/staff/mesas")
     suspend fun getMesas(
         @Header("Authorization") token: String
     ): Response<ApiResponse<MesaResponse>>
 
-    @GET("api/gerente/zonas")
+    @GET("api/staff/zonas")
     suspend fun getZonas(
         @Header("Authorization") token: String
     ): Response<ApiResponse<ZonaResponse>>

@@ -31,7 +31,6 @@ class LoginActivity : AppCompatActivity() {
         btnLogin.setOnClickListener {
             val email = etEmail.text.toString().trim()
             val password = etPassword.text.toString().trim()
-
             viewModel.login(email, password)
         }
 
@@ -40,7 +39,6 @@ class LoginActivity : AppCompatActivity() {
 
     private fun observeViewModel() {
         viewModel.state.observe(this) { state ->
-
             etEmail.error = null
             etPassword.error = null
 
@@ -54,6 +52,7 @@ class LoginActivity : AppCompatActivity() {
                         .putString("TOKEN", state.token)
                         .putString("ROLE", state.role)
                         .putString("NAME", state.name)
+                        .putString("CAFE_NAME", state.cafeNombre) // Guardamos el nombre de la cafeteria
                         .apply()
 
                     // 2. ACTUALIZAR EL REPOSITORIO Y EL UPDATER

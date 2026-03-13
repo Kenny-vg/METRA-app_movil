@@ -14,7 +14,6 @@ class LoginViewModel : ViewModel() {
     val state: LiveData<LoginState> = _state
 
     fun login(email: String, password: String) {
-
         _state.value = LoginState.Idle
 
         if (email.isBlank()) {
@@ -24,7 +23,7 @@ class LoginViewModel : ViewModel() {
 
         val emailRegex = "^[A-Za-z](.*)([@]{1})(.{1,})(\\.)(.{1,})".toRegex()
         if (!email.matches(emailRegex)) {
-            _state.value = LoginState.EmailError("Formato de correo inválido. Ejemplo: correo@dominio.com")
+            _state.value = LoginState.EmailError("Formato de correo inválido")
             return
         }
 
@@ -33,70 +32,35 @@ class LoginViewModel : ViewModel() {
             return
         }
 
-
-
         _state.value = LoginState.Loading
 
         viewModelScope.launch {
-
             try {
-
                 val response = repository.login(email, password)
+                if (response.isSuccessful) {
+                    val body = response.body()
+                    if (body?.success == true) {
+                        val user = body.data?.usuario
+                        val token = body.data?.token ?: ""
+                        val role = user?.role?.lowercase()?.trim() ?: ""
+                        val name = user?.name ?: ""
+                        // Usamos el nombre real de la propiedad de la API: nombre_cafeteria
+                        val cafeNombre = user?.nombre_cafeteria ?: "CAFETERÍA"
 
-                when (response.code()) {
-
-                    200 -> {
-
-                        val body = response.body()
-
-                        if (body?.success == true) {
-
-                            val token = body.data?.token ?: ""
-                            val role = body.data?.usuario?.role?.lowercase()?.trim() ?: ""
-                            val name = body.data?.usuario?.name ?: ""
-                            val allowedRoles = listOf("gerente", "personal")
-
-                            if (allowedRoles.contains(role)) {
-
-                                _state.value = LoginState.Success(token, role, name)
-
-                            } else {
-
-                                _state.value =
-                                    LoginState.Error("No tienes permisos para ingresar")
-                            }
-
+                        val allowedRoles = listOf("gerente", "personal")
+                        if (allowedRoles.contains(role)) {
+                            _state.value = LoginState.Success(token, role, name, cafeNombre)
                         } else {
-
-                            _state.value =
-                                LoginState.Error(body?.message ?: "Error")
+                            _state.value = LoginState.Error("No tienes permisos")
                         }
+                    } else {
+                        _state.value = LoginState.Error(body?.message ?: "Error")
                     }
-
-                    401 -> {
-                        _state.value =
-                            LoginState.Error("Credenciales inválidas")
-                    }
-
-                    else -> {
-                        val errorBody = response.errorBody()?.string()
-
-                        val message = try {
-                            val json = org.json.JSONObject(errorBody ?: "")
-                            json.optString("message", "Error ${response.code()}")
-                        } catch (e: Exception) {
-                            "Error ${response.code()}"
-                        }
-
-                        println("ERROR BACKEND: $message")
-
-                        _state.value = LoginState.Error(message)
-                    }
+                } else {
+                    _state.value = LoginState.Error("Error: ${response.code()}")
                 }
-
             } catch (e: Exception) {
-                e.printStackTrace()
-                _state.value = LoginState.Error("Error: ${e.message}")
+                _state.value = LoginState.Error("Error de conexión")
             }
         }
     }

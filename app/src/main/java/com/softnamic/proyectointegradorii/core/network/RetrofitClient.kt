@@ -7,7 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
 
-    private const val BASE_URL = "https://metra-appweb-production.up.railway.app/"
+    private const val BASE_URL = "https://v-tech-metra.td60xq.easypanel.host/"
 
     val instance: ApiService by lazy {
         // Esto nos permite ver qué está pasando con las peticiones en el Logcat

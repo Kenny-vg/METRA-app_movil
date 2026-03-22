@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
 class MesasViewModel : ViewModel() {
 
@@ -43,6 +44,13 @@ class MesasViewModel : ViewModel() {
     fun seleccionarZona(zona: String) {
         if (_zonaSeleccionada.value != zona) {
             _zonaSeleccionada.value = zona
+        }
+    }
+
+    fun finalizarOcupacion(idOcupacion: Int, onResult: (Boolean, String) -> Unit) {
+        viewModelScope.launch {
+            val (exito, mensaje) = RestaurantRepository.finalizarOcupacion(idOcupacion)
+            onResult(exito, mensaje)
         }
     }
 }

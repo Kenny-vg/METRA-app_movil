@@ -27,7 +27,7 @@
             android:textColor="@color/coffee_on_surface"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/spinnerAccion"
+            app:layout_constraintEnd_toEndOf="parent"
             tools:text="Mesa 5" />
 
         <!-- Capacidad -->
@@ -72,15 +72,6 @@
             app:layout_constraintTop_toBottomOf="@id/tvMesaZona"
             tools:text="Disponible"
             tools:backgroundTint="@color/status_available"/>
-
-        <!-- Spinner de acción -->
-        <Spinner
-            android:id="@+id/spinnerAccion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

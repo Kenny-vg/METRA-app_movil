@@ -9,15 +9,18 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.softnamic.proyectointegradorii.R
+import androidx.core.content.ContextCompat
 
 class ReservaAdapter(
     private val onClick: (Reserva) -> Unit
 ) : ListAdapter<Reserva, ReservaAdapter.ViewHolder>(ReservaDiffCallback()) {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val nombre: TextView = view.findViewById(R.id.tvNombre)
-        val mesa: TextView = view.findViewById(R.id.tvMesa)
-        val zona: TextView = view.findViewById(R.id.tvZona)
+        val folio: TextView = view.findViewById(R.id.tvFolio)
+        val cliente: TextView = view.findViewById(R.id.tvCliente)
+        val fecha: TextView = view.findViewById(R.id.tvFecha)
+        val hora: TextView = view.findViewById(R.id.tvHora)
+        val personas: TextView = view.findViewById(R.id.tvPersonas)
         val estado: TextView = view.findViewById(R.id.tvEstado)
         val txtPromocion: TextView = view.findViewById(R.id.txtPromocion)
     }
@@ -31,25 +34,46 @@ class ReservaAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val reserva = getItem(position)
 
-        holder.nombre.text = "${reserva.nombre} - ${reserva.hora}"
-        holder.mesa.text = reserva.mesa ?: "Sin mesa asignada"
-        holder.zona.text = "Zona: ${reserva.zona}"
+        holder.folio.text = "Folio: ${reserva.folio}"
+        holder.cliente.text = "Cliente: ${reserva.nombreCliente ?: "Desconocido"}"
+        holder.fecha.text = "Fecha: ${reserva.fecha}"
+        holder.hora.text = "Hora: ${reserva.hora}"
+        holder.personas.text = "Personas: ${reserva.personas}"
 
-        when (reserva.estado) {
-            "Llegó" -> {
-                holder.estado.text = "Llegó"
-                holder.estado.setTextColor(Color.parseColor("#388E3C")) // Dark green
-                (holder.itemView as com.google.android.material.card.MaterialCardView).setCardBackgroundColor(Color.parseColor("#E8F5E9")) // Very light green
+        val estadoTxt = reserva.estado?.lowercase() ?: "pendiente"
+        val ctx = holder.itemView.context
+        val card = holder.itemView as com.google.android.material.card.MaterialCardView
+        
+        when (estadoTxt) {
+            "pendiente" -> {
+                holder.estado.text = "Estado: Pendiente"
+                holder.estado.setTextColor(ContextCompat.getColor(ctx, R.color.reserva_pendiente_text))
+                card.setCardBackgroundColor(ContextCompat.getColor(ctx, R.color.reserva_pendiente_bg))
             }
-            "No llegó" -> {
-                holder.estado.text = "No llegó"
-                holder.estado.setTextColor(Color.parseColor("#D32F2F")) // Dark red
-                (holder.itemView as com.google.android.material.card.MaterialCardView).setCardBackgroundColor(Color.parseColor("#FFEBEE")) // Very light red
+            "en_curso" -> {
+                holder.estado.text = "Estado: En curso (Cliente en mesa)"
+                holder.estado.setTextColor(ContextCompat.getColor(ctx, R.color.reserva_activa_text))
+                card.setCardBackgroundColor(ContextCompat.getColor(ctx, R.color.reserva_activa_bg))
+            }
+            "finalizada" -> {
+                holder.estado.text = "Estado: Finalizada"
+                holder.estado.setTextColor(Color.parseColor("#757575"))
+                card.setCardBackgroundColor(Color.parseColor("#E0E0E0"))
+            }
+            "cancelada" -> {
+                holder.estado.text = "Estado: Cancelada"
+                holder.estado.setTextColor(ContextCompat.getColor(ctx, R.color.reserva_cancelada_text))
+                card.setCardBackgroundColor(ContextCompat.getColor(ctx, R.color.reserva_cancelada_bg))
+            }
+            "no_show" -> {
+                holder.estado.text = "Estado: No se presentó"
+                holder.estado.setTextColor(ContextCompat.getColor(ctx, R.color.reserva_noshow_text))
+                card.setCardBackgroundColor(ContextCompat.getColor(ctx, R.color.reserva_noshow_bg))
             }
             else -> {
-                holder.estado.text = "Pendiente"
-                holder.estado.setTextColor(Color.parseColor("#6B6B6B"))
-                (holder.itemView as com.google.android.material.card.MaterialCardView).setCardBackgroundColor(Color.WHITE)
+                holder.estado.text = "Estado: ${reserva.estado?.replaceFirstChar { it.uppercase() } ?: "Pendiente"}"
+                holder.estado.setTextColor(ContextCompat.getColor(ctx, R.color.text_color_secondary))
+                card.setCardBackgroundColor(ContextCompat.getColor(ctx, R.color.coffee_surface))
             }
         }
 
@@ -68,8 +92,7 @@ class ReservaAdapter(
 
 class ReservaDiffCallback : DiffUtil.ItemCallback<Reserva>() {
     override fun areItemsTheSame(oldItem: Reserva, newItem: Reserva): Boolean {
-        // Suponiendo que la combinación de nombre y hora es única en este mockup
-        return oldItem.nombre == newItem.nombre && oldItem.hora == newItem.hora
+        return oldItem.id == newItem.id
     }
 
     override fun areContentsTheSame(oldItem: Reserva, newItem: Reserva): Boolean {

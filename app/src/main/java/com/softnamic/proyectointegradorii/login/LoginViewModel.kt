@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 
 class LoginViewModel : ViewModel() {
 
@@ -37,6 +38,7 @@ class LoginViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 val response = repository.login(email, password)
+                
                 if (response.isSuccessful) {
                     val body = response.body()
                     if (body?.success == true) {
@@ -44,23 +46,40 @@ class LoginViewModel : ViewModel() {
                         val token = body.data?.token ?: ""
                         val role = user?.role?.lowercase()?.trim() ?: ""
                         val name = user?.name ?: ""
-                        // Usamos el nombre real de la propiedad de la API: nombre_cafeteria
                         val cafeNombre = user?.nombre_cafeteria ?: "CAFETERÍA"
 
                         val allowedRoles = listOf("gerente", "personal")
                         if (allowedRoles.contains(role)) {
                             _state.value = LoginState.Success(token, role, name, cafeNombre)
                         } else {
-                            _state.value = LoginState.Error("No tienes permisos")
+                            _state.value = LoginState.Error("No tienes permisos para acceder")
                         }
                     } else {
-                        _state.value = LoginState.Error(body?.message ?: "Error")
+                        _state.value = LoginState.Error(body?.message ?: "Usuario o contraseña no válidos")
                     }
                 } else {
-                    _state.value = LoginState.Error("Error: ${response.code()}")
+                    // Manejo de errores por código de estado
+                    val errorMessage = when (response.code()) {
+                        401 -> "El usuario no existe o la contraseña es incorrecta"
+                        404 -> "Servicio no disponible"
+                        500 -> "Error en el servidor. Inténtalo más tarde"
+                        else -> {
+                            // Intentar extraer el mensaje de error del body de la respuesta
+                            try {
+                                val errorBody = response.errorBody()?.string()
+                                val json = JSONObject(errorBody ?: "")
+                                json.optString("message", "Error: ${response.code()}")
+                            } catch (e: Exception) {
+                                "Error: ${response.code()}"
+                            }
+                        }
+                    }
+                    _state.value = LoginState.Error(errorMessage)
                 }
             } catch (e: Exception) {
-                _state.value = LoginState.Error("Error de conexión")
+                // El CATCH para errores de red o excepciones fatales
+                e.printStackTrace()
+                _state.value = LoginState.Error("No se pudo conectar con el servidor. Revisa tu internet.")
             }
         }
     }

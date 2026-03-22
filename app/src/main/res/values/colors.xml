@@ -40,5 +40,20 @@
     <!-- Mesa ocupada -->
     <color name="rojo">@color/status_occupied</color>
     <!-- Mesa reservada -->
+    <!-- Mesa reservada -->
     <color name="mesa_reservada">@color/status_reserved</color>
+
+    <!-- Reservation Status Colors -->
+    <color name="reserva_pendiente_bg">#FFF8E1</color>       <!-- Light Amber -->
+    <color name="reserva_pendiente_text">#F57F17</color>     <!-- Dark Amber -->
+    <color name="reserva_confirmada_bg">#E3F2FD</color>      <!-- Light Blue -->
+    <color name="reserva_confirmada_text">#1565C0</color>    <!-- Dark Blue -->
+    <color name="reserva_activa_bg">#E8F5E9</color>          <!-- Light Green -->
+    <color name="reserva_activa_text">#2E7D32</color>        <!-- Dark Green -->
+    <color name="reserva_completada_bg">#C8E6C9</color>      <!-- Green -->
+    <color name="reserva_completada_text">#1B5E20</color>    <!-- Very Dark Green -->
+    <color name="reserva_cancelada_bg">#FFEBEE</color>       <!-- Light Red -->
+    <color name="reserva_cancelada_text">#C62828</color>     <!-- Dark Red -->
+    <color name="reserva_noshow_bg">#FFCDD2</color>          <!-- Strong Red -->
+    <color name="reserva_noshow_text">#B71C1C</color>        <!-- Very Dark Red -->
 </resources>

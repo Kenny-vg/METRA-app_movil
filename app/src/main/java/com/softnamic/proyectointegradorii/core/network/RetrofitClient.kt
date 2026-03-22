@@ -1,5 +1,6 @@
 package com.softnamic.proyectointegradorii.core.network
 
+import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -19,10 +20,15 @@ object RetrofitClient {
             .addInterceptor(logging)
             .build()
 
+        // Gson en modo lenient para aceptar respuestas no-estrictas del servidor
+        val gson = GsonBuilder()
+            .setLenient()
+            .create()
+
         val retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(client)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
 
         retrofit.create(ApiService::class.java)

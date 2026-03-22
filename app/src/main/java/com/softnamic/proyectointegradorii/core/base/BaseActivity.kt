@@ -25,11 +25,13 @@ open class BaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         
-        // Asegurarnos de que el repositorio tenga el token disponible globalmente
+        // Asegurarnos de que el repositorio tenga el token y rol disponibles globalmente
         val prefs = getSharedPreferences("MY_APP", MODE_PRIVATE)
         val token = prefs.getString("TOKEN", "") ?: ""
+        val role = prefs.getString("ROLE", "staff") ?: "staff"
         if (token.isNotEmpty()) {
             RestaurantRepository.currentToken = token
+            RestaurantRepository.currentRole = role
         }
 
         // Iniciamos el actualizador global que corre en background

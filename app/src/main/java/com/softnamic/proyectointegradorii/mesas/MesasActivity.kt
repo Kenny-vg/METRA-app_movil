@@ -39,11 +39,40 @@ class MesasActivity : BaseActivity() {
         spinnerZona = findViewById(R.id.spinnerZona)
         rvMesas.layoutManager = LinearLayoutManager(this)
         
-        adapter = MesasAdapter()
+        adapter = MesasAdapter { mesa ->
+            if (mesa.estado == EstadoMesa.OCUPADA) {
+                mostrarDialogoLiberar(mesa)
+            } else {
+                Toast.makeText(this, "Esta mesa está ${mesa.estado.name.lowercase()}", Toast.LENGTH_SHORT).show()
+            }
+        }
         rvMesas.adapter = adapter
 
         observarViewModel()
         configurarFiltro()
+    }
+
+    private fun mostrarDialogoLiberar(mesa: Mesa) {
+        val dialog = androidx.appcompat.app.AlertDialog.Builder(this)
+            .setTitle("🍽️ Liberar ${mesa.nombre}")
+            .setMessage("¿Estás seguro de que quieres liberar esta mesa?\n\nEsto finalizará la estancia del cliente, marcará la mesa como disponible y enviará una solicitud de reseña al correo del cliente.")
+            .setPositiveButton("Sí, liberar mesa") { _, _ ->
+                val ocId = mesa.ocupacionId
+                if (ocId != null) {
+                    Toast.makeText(this, "Liberando mesa...", Toast.LENGTH_SHORT).show()
+                    viewModel.finalizarOcupacion(ocId) { exito, msg ->
+                        runOnUiThread {
+                            if (exito) Toast.makeText(this, "✅ Mesa liberada correctamente", Toast.LENGTH_SHORT).show()
+                            else Toast.makeText(this, "Error: $msg", Toast.LENGTH_LONG).show()
+                        }
+                    }
+                } else {
+                    Toast.makeText(this, "No se encontró la ocupación activa de esta mesa", Toast.LENGTH_SHORT).show()
+                }
+            }
+            .setNegativeButton("Cancelar", null)
+            .create()
+        dialog.show()
     }
 
     private fun observarViewModel() {

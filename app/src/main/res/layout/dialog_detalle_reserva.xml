@@ -1,33 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true">
+
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="20dp"
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/tvDetalleNombre"
+        android:id="@+id/tvDetalleFolio"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Nombre"
+        android:text="Folio: "
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:paddingBottom="8dp"/>
+
+    <TextView
+        android:id="@+id/tvDetalleCliente"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cliente: "
         android:textStyle="bold"
         android:textSize="16sp"
         android:paddingBottom="8dp"/>
+
+    <TextView
+        android:id="@+id/tvDetalleNombre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cafetería: "
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:paddingBottom="8dp"/>
+
+    <TextView
+        android:id="@+id/tvDetalleFecha"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Fecha: "
+        android:textSize="16sp"
+        android:paddingBottom="8dp"/>
+
     <TextView
         android:id="@+id/tvDetalleHora"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hora"
-        android:textStyle="bold"
+        android:text="Hora: "
         android:textSize="16sp"
         android:paddingBottom="8dp"/>
+
     <TextView
         android:id="@+id/tvDetallePersonas"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Personas:"
+        android:textSize="16sp"
+        android:paddingBottom="8dp"/>
+
+    <TextView
+        android:id="@+id/tvDetalleEstado"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Estado: "
         android:textStyle="bold"
+        android:paddingBottom="8dp"/>
+
+    <TextView
+        android:id="@+id/tvDetalleOcasion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ocasión: "
         android:textSize="16sp"
         android:paddingBottom="8dp"/>
 
@@ -35,13 +82,14 @@
         android:id="@+id/tvDetalleZona"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Zona"
+        android:text="Zona: "
         android:paddingBottom="8dp"/>
+
     <TextView
         android:id="@+id/tvDetalleMesa"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Mesa: 1"
+        android:text="Mesa: "
         android:paddingBottom="8dp"/>
 
 
@@ -58,9 +106,71 @@
         android:layout_height="wrap_content"
         android:text="Promoción aplicada:\nSin promoción"
         android:paddingTop="8dp"
-        android:paddingBottom="16dp"
+        android:paddingBottom="4dp"
         android:textColor="@color/coffee_primary"
         android:textStyle="bold|italic"/>
+
+    <TextView
+        android:id="@+id/tvDetallePrecioPromocion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Precio: "
+        android:textSize="14sp"
+        android:paddingBottom="16dp"
+        android:textColor="@color/text_color_secondary"/>
+
+    <!-- Sección de Mesas Recomendadas (siempre visible) -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/text_color_secondary"
+        android:alpha="0.3"
+        android:layout_marginBottom="8dp"/>
+
+    <TextView
+        android:id="@+id/tvMesasRecomendadasLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="🪑 Mesas disponibles en esta zona:"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:textColor="@color/coffee_primary"
+        android:paddingBottom="6dp"/>
+
+    <LinearLayout
+        android:id="@+id/llMesasRecomendadas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="12dp"/>
+
+    <!-- Sección de Asignar mesa (solo Confirmar llegada) -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/text_color_secondary"
+        android:alpha="0.3"
+        android:layout_marginBottom="8dp"/>
+
+    <TextView
+        android:id="@+id/tvMesasDisponiblesLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Asignar mesa (solo para Confirmar llegada):"
+        android:textSize="14sp"
+        android:visibility="gone"
+        android:paddingBottom="4dp"/>
+
+    <Spinner
+        android:id="@+id/spMesasDisponibles"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="12dp"
+        android:background="@android:drawable/btn_dropdown"
+        android:popupBackground="@color/coffee_surface"
+        android:spinnerMode="dialog"
+        android:visibility="gone"
+        android:padding="8dp"/>
 
     <Spinner
         android:id="@+id/spAccion"
@@ -68,6 +178,8 @@
         android:layout_height="50dp"
         android:layout_marginBottom="12dp"
         android:background="@android:drawable/btn_dropdown"
+        android:popupBackground="@color/coffee_surface"
+        android:spinnerMode="dialog"
         android:padding="8dp"/>
 
     <Button
@@ -81,3 +193,4 @@
         app:backgroundTint="@color/coffee_primary"/>
 
 </LinearLayout>
+</ScrollView>

@@ -57,6 +57,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/spacing_medium"
         android:layout_marginEnd="@dimen/spacing_medium"
+        android:popupBackground="@color/coffee_surface"
         app:layout_constraintTop_toBottomOf="@id/etBuscar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>

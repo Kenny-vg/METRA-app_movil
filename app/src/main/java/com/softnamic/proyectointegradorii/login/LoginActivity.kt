@@ -62,7 +62,7 @@ class LoginActivity : AppCompatActivity() {
                 is LoginState.Loading -> {
                     pbLoading.visibility = View.VISIBLE
                     btnLogin.isEnabled = false
-                    btnLogin.text = "" // Ocultar texto para que se vea el spinner
+                    btnLogin.text = "" 
                 }
 
                 is LoginState.Success -> {
@@ -85,6 +85,8 @@ class LoginActivity : AppCompatActivity() {
                     tilEmail.error = state.message 
                 }
                 is LoginState.PasswordError -> { 
+                    // Cuando hay error de credenciales, marcamos ambos pero sin el icono que tapa el ojo
+                    tilEmail.error = " " // Espacio para que se ponga rojo el borde
                     tilPassword.error = state.message 
                 }
                 is LoginState.Error -> { 

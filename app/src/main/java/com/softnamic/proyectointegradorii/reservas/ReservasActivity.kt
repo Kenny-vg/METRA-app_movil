@@ -1,6 +1,9 @@
 package com.softnamic.proyectointegradorii.reservas
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.view.View
 import android.widget.*
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
@@ -18,6 +21,7 @@ class ReservasActivity : BaseActivity() {
 
     private lateinit var recycler: RecyclerView
     private lateinit var adapter: ReservaAdapter
+    private lateinit var etBuscar: EditText
 
     private val viewModel: ReservasViewModel by viewModels()
 
@@ -29,6 +33,7 @@ class ReservasActivity : BaseActivity() {
         configurarMenuInferior(R.id.bottom_reservations)
 
         recycler = findViewById(R.id.rvReservas)
+        etBuscar = findViewById(R.id.etBuscar)
         recycler.layoutManager = LinearLayoutManager(this)
 
         adapter = ReservaAdapter { reserva ->
@@ -36,13 +41,24 @@ class ReservasActivity : BaseActivity() {
         }
         recycler.adapter = adapter
 
+        configurarBuscador()
         observarViewModel()
+    }
+
+    private fun configurarBuscador() {
+        etBuscar.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                viewModel.buscar(s.toString())
+            }
+            override fun afterTextChanged(s: Editable?) {}
+        })
     }
 
     private fun observarViewModel() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.reservas.collectLatest { reservas ->
+                viewModel.reservasFiltradas.collectLatest { reservas ->
                     adapter.submitList(reservas)
                 }
             }
@@ -65,25 +81,20 @@ class ReservasActivity : BaseActivity() {
         dialogView.findViewById<TextView>(R.id.tvDetalleComentarios).text = "NOTAS: ${reserva.comentarios ?: "Sin comentarios"}"
         dialogView.findViewById<TextView>(R.id.tvDetallePromocion).text = "PROMOCIÓN: ${reserva.promocion}"
 
-        // Mostrar precio de promoción
         val tvPrecio = dialogView.findViewById<TextView>(R.id.tvDetallePrecioPromocion)
         if (reserva.precioPromocion.isNotEmpty()) {
             tvPrecio.text = "Precio: \$${reserva.precioPromocion}"
-            tvPrecio.visibility = android.view.View.VISIBLE
+            tvPrecio.visibility = View.VISIBLE
         } else {
-            tvPrecio.visibility = android.view.View.GONE
+            tvPrecio.visibility = View.GONE
         }
 
-        // Ocultar ocasión si no aplica
         val tvOcasion = dialogView.findViewById<TextView>(R.id.tvDetalleOcasion)
         if (reserva.ocasion == "Sin ocasión") {
-            tvOcasion.visibility = android.view.View.GONE
+            tvOcasion.visibility = View.GONE
         }
 
-        // ─── Sección: Mesas recomendadas (siempre visible) ───
-        val llMesasRecomendadas = dialogView.findViewById<android.widget.LinearLayout>(R.id.llMesasRecomendadas)
-
-
+        val llMesasRecomendadas = dialogView.findViewById<LinearLayout>(R.id.llMesasRecomendadas)
         val mesasEnZona = viewModel.mesas.value.filter {
             it.zona.equals(reserva.zona, ignoreCase = true) &&
             it.estado == com.softnamic.proyectointegradorii.mesas.EstadoMesa.DISPONIBLE &&
@@ -109,7 +120,6 @@ class ReservasActivity : BaseActivity() {
             }
         }
 
-        // ─── Spinner de acciones ───
         val spinner = dialogView.findViewById<Spinner>(R.id.spAccion)
         val spMesas = dialogView.findViewById<Spinner>(R.id.spMesasDisponibles)
         val tvMesasDisponiblesLabel = dialogView.findViewById<TextView>(R.id.tvMesasDisponiblesLabel)
@@ -122,22 +132,19 @@ class ReservasActivity : BaseActivity() {
             acciones.add("Sólo marcar llegada")
             acciones.add("Cancelar reservación")
         } else if (estadoActual == "en_curso") {
-            // El cliente ya hizo checkin pero puede que no tenga mesa asignada aún
             acciones.add("Asignar mesa")
         }
-        // Si es "finalizada" o "cancelada" no hay acciones disponibles
 
         if (acciones.isEmpty()) {
-            spinner.visibility = android.view.View.GONE
-            spMesas.visibility = android.view.View.GONE
-            tvMesasDisponiblesLabel.visibility = android.view.View.GONE
-            dialogView.findViewById<Button>(R.id.btnAplicar).visibility = android.view.View.GONE
+            spinner.visibility = View.GONE
+            spMesas.visibility = View.GONE
+            tvMesasDisponiblesLabel.visibility = View.GONE
+            dialogView.findViewById<Button>(R.id.btnAplicar).visibility = View.GONE
         } else {
             val spinnerAdapter = ArrayAdapter(this, R.layout.spinner_item_custom, acciones)
             spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item_custom)
             spinner.adapter = spinnerAdapter
 
-            // Spinner de mesas: si la reserva no tiene zona, mostrar TODAS las disponibles
             val tieneZona = !reserva.zona.isNullOrBlank() && reserva.zona != "General"
             val mesasDisponibles = viewModel.mesas.value.filter {
                 it.estado == com.softnamic.proyectointegradorii.mesas.EstadoMesa.DISPONIBLE && it.activo == 1 &&
@@ -153,11 +160,11 @@ class ReservasActivity : BaseActivity() {
             spMesas.adapter = mesasAdapter
 
             spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(parent: AdapterView<*>?, view: android.view.View?, position: Int, id: Long) {
+                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                     val selected = acciones[position]
                     val isMesaRequerida = selected == "Llegó y asignar mesa" || selected == "Asignar mesa"
-                    spMesas.visibility = if (isMesaRequerida) android.view.View.VISIBLE else android.view.View.GONE
-                    tvMesasDisponiblesLabel.visibility = if (isMesaRequerida) android.view.View.VISIBLE else android.view.View.GONE
+                    spMesas.visibility = if (isMesaRequerida) View.VISIBLE else View.GONE
+                    tvMesasDisponiblesLabel.visibility = if (isMesaRequerida) View.VISIBLE else View.GONE
                 }
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
@@ -170,8 +177,6 @@ class ReservasActivity : BaseActivity() {
 
         dialogView.findViewById<Button>(R.id.btnAplicar).setOnClickListener {
             val accionSeleccionada = spinner.selectedItem?.toString() ?: return@setOnClickListener
-
-            // Helper para obtener la mesa seleccionada
             val tieneZona = !reserva.zona.isNullOrBlank() && reserva.zona != "General"
             val mesasDisponibles = viewModel.mesas.value.filter {
                 it.estado == com.softnamic.proyectointegradorii.mesas.EstadoMesa.DISPONIBLE && it.activo == 1 &&
@@ -180,59 +185,32 @@ class ReservasActivity : BaseActivity() {
 
             if (accionSeleccionada == "Sólo marcar llegada") {
                 dialog.dismiss()
-                Toast.makeText(this, "Registrando llegada de cliente...", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Registrando llegada...", Toast.LENGTH_SHORT).show()
                 viewModel.checkinReservacion(reserva.id) { exito, msg ->
                     runOnUiThread {
-                        if (exito) Toast.makeText(this, "Llegada registrada (en curso)", Toast.LENGTH_SHORT).show()
+                        if (exito) Toast.makeText(this, "Llegada registrada", Toast.LENGTH_SHORT).show()
                         else Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
                     }
                 }
-
-            } else if (accionSeleccionada == "Llegó y asignar mesa") {
+            } else if (accionSeleccionada == "Llegó y asignar mesa" || accionSeleccionada == "Asignar mesa") {
                 if (mesasDisponibles.isEmpty()) {
-                    Toast.makeText(this, "No hay mesas disponibles en la zona ${reserva.zona}", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, "No hay mesas disponibles", Toast.LENGTH_LONG).show()
                     return@setOnClickListener
                 }
                 val selectedMesaIdx = spMesas.selectedItemPosition
                 if (selectedMesaIdx < 0 || selectedMesaIdx >= mesasDisponibles.size) return@setOnClickListener
                 val mesaSeleccionada = mesasDisponibles[selectedMesaIdx]
-                val mesaId = mesaSeleccionada.id
-                val zonaIdMesa = mesaSeleccionada.zonaId
-
-                dialog.dismiss()
-                Toast.makeText(this, "Abriendo mesa y registrando llegada...", Toast.LENGTH_SHORT).show()
-                
-                // POST /ocupaciones hace TODO: crea la ocupación Y cambia la reserva a en_curso
-                viewModel.abrirMesa(reserva.id, mesaId, zonaIdMesa, reserva.personas, reserva.comentarios) { exito, msg ->
-                    runOnUiThread {
-                        if (exito) Toast.makeText(this, "✅ Cliente sentado y mesa abierta", Toast.LENGTH_SHORT).show()
-                        else Toast.makeText(this, "Error: $msg", Toast.LENGTH_LONG).show()
-                    }
-                }
-
-            } else if (accionSeleccionada == "Asignar mesa") {
-                if (mesasDisponibles.isEmpty()) {
-                    Toast.makeText(this, "No hay mesas disponibles libres en ${reserva.zona}", Toast.LENGTH_LONG).show()
-                    return@setOnClickListener
-                }
-                val selectedMesaIdx = spMesas.selectedItemPosition
-                if (selectedMesaIdx < 0 || selectedMesaIdx >= mesasDisponibles.size) return@setOnClickListener
-                val mesaSeleccionada = mesasDisponibles[selectedMesaIdx]
-                val mesaId = mesaSeleccionada.id
-                val zonaIdMesa = mesaSeleccionada.zonaId
 
                 dialog.dismiss()
                 Toast.makeText(this, "Asignando mesa...", Toast.LENGTH_SHORT).show()
-                viewModel.abrirMesa(reserva.id, mesaId, zonaIdMesa, reserva.personas, reserva.comentarios) { exito, msg ->
+                viewModel.abrirMesa(reserva.id, mesaSeleccionada.id, mesaSeleccionada.zonaId, reserva.personas, reserva.comentarios) { exito, msg ->
                     runOnUiThread {
-                        if (exito) Toast.makeText(this, "✅ Mesa asignada con éxito", Toast.LENGTH_SHORT).show()
+                        if (exito) Toast.makeText(this, "✅ Operación exitosa", Toast.LENGTH_SHORT).show()
                         else Toast.makeText(this, "Error: $msg", Toast.LENGTH_LONG).show()
                     }
                 }
-
             } else if (accionSeleccionada == "Cancelar reservación") {
                 dialog.dismiss()
-                Toast.makeText(this, "Cancelando reservación...", Toast.LENGTH_SHORT).show()
                 viewModel.cancelarReservacion(reserva.id) { exito, msg ->
                     runOnUiThread {
                         if (exito) Toast.makeText(this, "Reservación cancelada", Toast.LENGTH_SHORT).show()
@@ -241,7 +219,6 @@ class ReservasActivity : BaseActivity() {
                 }
             }
         }
-
         dialog.show()
     }
 }

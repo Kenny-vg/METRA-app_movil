@@ -5,74 +5,131 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="@dimen/spacing_medium"
-    android:layout_marginEnd="@dimen/spacing_medium"
-    android:layout_marginTop="@dimen/spacing_small"
-    android:layout_marginBottom="@dimen/spacing_small"
-    app:cardCornerRadius="20dp"
+    android:layout_marginStart="14dp"
+    android:layout_marginEnd="14dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    app:cardCornerRadius="14dp"
     app:cardElevation="2dp"
+    app:strokeWidth="0dp"
     app:cardBackgroundColor="@color/coffee_surface">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/spacing_medium">
+        android:orientation="horizontal">
 
-        <!-- Nombre de la mesa -->
-        <TextView
-            android:id="@+id/tvMesaNombre"
-            style="@style/TextAppearance.App.Headline2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:textColor="@color/coffee_on_surface"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            tools:text="Mesa 5" />
+            <!-- ═══ BARRA LATERAL DE COLOR ═══ -->
+            <View
+                android:id="@+id/viewEstadoBar"
+                android:layout_width="4dp"
+                android:layout_height="match_parent"
+                android:background="@color/status_available" />
 
-        <!-- Capacidad -->
-        <TextView
-            android:id="@+id/tvMesaCapacidad"
-            style="@style/TextAppearance.App.Body1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_small"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvMesaNombre"
-            app:layout_constraintEnd_toEndOf="@id/tvMesaNombre"
-            tools:text="Capacidad: 8 personas" />
+            <!-- ═══ CONTENIDO ═══ -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="14dp">
 
-        <!-- Zona -->
-        <TextView
-            android:id="@+id/tvMesaZona"
-            style="@style/TextAppearance.App.Body1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:textColor="@color/text_color_secondary"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvMesaCapacidad"
-            app:layout_constraintEnd_toEndOf="@id/tvMesaNombre"
-            tools:text="📍 Zona: Terraza" />
+            <!-- Ícono de mesa (vectores, sin emojis) -->
+            <ImageView
+                android:id="@+id/ivMesaIcon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_location"
+                android:background="@drawable/info_row_background"
+                app:tint="@color/coffee_primary"
+                android:padding="10dp"
+                android:importantForAccessibility="no"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Estado -->
-        <TextView
-            android:id="@+id/tvMesaEstado"
-            style="@style/TextAppearance.App.Label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_small"
-            android:background="@drawable/tag_background"
-            android:textColor="@color/white"
-            android:paddingStart="@dimen/spacing_medium"
-            android:paddingEnd="@dimen/spacing_medium"
-            android:paddingTop="@dimen/spacing_small"
-            android:paddingBottom="@dimen/spacing_small"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvMesaZona"
-            tools:text="Disponible"
-            tools:backgroundTint="@color/status_available"/>
+            <TextView
+                android:id="@+id/tvMesaNombre"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/lora"
+                android:textColor="@color/coffee_on_surface"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@id/ivMesaIcon"
+                app:layout_constraintEnd_toStartOf="@id/tvMesaEstado"
+                app:layout_constraintTop_toTopOf="@id/ivMesaIcon"
+                tools:text="Mesa 5" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/tvMesaZona"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:textColor="@color/text_color_secondary"
+                android:textSize="12sp"
+                android:fontFamily="@font/lato"
+                app:layout_constraintStart_toEndOf="@id/ivMesaIcon"
+                app:layout_constraintEnd_toStartOf="@id/tvMesaEstado"
+                app:layout_constraintTop_toBottomOf="@id/tvMesaNombre"
+                tools:text="Terraza" />
+
+            <!-- Badge de estado a la derecha -->
+            <TextView
+                android:id="@+id/tvMesaEstado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/badge_estado"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:textAllCaps="true"
+                android:letterSpacing="0.04"
+                android:fontFamily="@font/lato"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="DISPONIBLE"
+                tools:backgroundTint="@color/status_available" />
+
+            <!-- Divider -->
+            <View
+                android:id="@+id/dividerMesa"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#F0ECE6"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@id/ivMesaIcon" />
+
+            <!-- Capacidad -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@id/dividerMesa">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/ic_people"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="4dp"
+                    android:importantForAccessibility="no" />
+
+                <TextView
+                    android:id="@+id/tvMesaCapacidad"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/coffee_on_surface"
+                    android:textSize="13sp"
+                    android:fontFamily="@font/lato"
+                    tools:text="Capacidad 8 personas" />
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
 
 </com.google.android.material.card.MaterialCardView>

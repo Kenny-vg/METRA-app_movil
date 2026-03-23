@@ -3,194 +3,296 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:fillViewport="true">
-
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="20dp"
-    android:orientation="vertical">
-
-    <TextView
-        android:id="@+id/tvDetalleFolio"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Folio: "
-        android:textStyle="bold"
-        android:textSize="18sp"
-        android:paddingBottom="8dp"/>
-
-    <TextView
-        android:id="@+id/tvDetalleCliente"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Cliente: "
-        android:textStyle="bold"
-        android:textSize="16sp"
-        android:paddingBottom="8dp"/>
-
-    <TextView
-        android:id="@+id/tvDetalleNombre"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Cafetería: "
-        android:textStyle="bold"
-        android:textSize="16sp"
-        android:paddingBottom="8dp"/>
-
-    <TextView
-        android:id="@+id/tvDetalleFecha"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Fecha: "
-        android:textSize="16sp"
-        android:paddingBottom="8dp"/>
-
-    <TextView
-        android:id="@+id/tvDetalleHora"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Hora: "
-        android:textSize="16sp"
-        android:paddingBottom="8dp"/>
-
-    <TextView
-        android:id="@+id/tvDetallePersonas"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Personas:"
-        android:textSize="16sp"
-        android:paddingBottom="8dp"/>
-
-    <TextView
-        android:id="@+id/tvDetalleEstado"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Estado: "
-        android:textStyle="bold"
-        android:paddingBottom="8dp"/>
-
-    <TextView
-        android:id="@+id/tvDetalleOcasion"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Ocasión: "
-        android:textSize="16sp"
-        android:paddingBottom="8dp"/>
-
-    <TextView
-        android:id="@+id/tvDetalleZona"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Zona: "
-        android:paddingBottom="8dp"/>
-
-    <TextView
-        android:id="@+id/tvDetalleMesa"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Mesa: "
-        android:paddingBottom="8dp"/>
-
-
-    <TextView
-        android:id="@+id/tvDetalleComentarios"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Comentarios"
-        android:paddingBottom="16dp"/>
-
-    <TextView
-        android:id="@+id/tvDetallePromocion"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Promoción aplicada:\nSin promoción"
-        android:paddingTop="8dp"
-        android:paddingBottom="4dp"
-        android:textColor="@color/coffee_primary"
-        android:textStyle="bold|italic"/>
-
-    <TextView
-        android:id="@+id/tvDetallePrecioPromocion"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Precio: "
-        android:textSize="14sp"
-        android:paddingBottom="16dp"
-        android:textColor="@color/text_color_secondary"/>
-
-    <!-- Sección de Mesas Recomendadas (siempre visible) -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/text_color_secondary"
-        android:alpha="0.3"
-        android:layout_marginBottom="8dp"/>
-
-    <TextView
-        android:id="@+id/tvMesasRecomendadasLabel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="🪑 Mesas disponibles en esta zona:"
-        android:textStyle="bold"
-        android:textSize="15sp"
-        android:textColor="@color/coffee_primary"
-        android:paddingBottom="6dp"/>
+    android:fillViewport="true"
+    android:background="@drawable/info_row_background">
 
     <LinearLayout
-        android:id="@+id/llMesasRecomendadas"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingBottom="12dp"/>
+        android:orientation="vertical">
 
-    <!-- Sección de Asignar mesa (solo Confirmar llegada) -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/text_color_secondary"
-        android:alpha="0.3"
-        android:layout_marginBottom="8dp"/>
+        <!-- ═══ HEADER CON FONDO COFFEE ═══ -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/coffee_primary_variant"
+            android:padding="20dp"
+            android:gravity="center_horizontal">
 
-    <TextView
-        android:id="@+id/tvMesasDisponiblesLabel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Asignar mesa (solo para Confirmar llegada):"
-        android:textSize="14sp"
-        android:visibility="gone"
-        android:paddingBottom="4dp"/>
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_info"
+                android:background="@drawable/info_row_background"
+                app:tint="@color/coffee_primary_variant"
+                android:padding="8dp"
+                android:layout_marginBottom="12dp"
+                android:importantForAccessibility="no" />
 
-    <Spinner
-        android:id="@+id/spMesasDisponibles"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginBottom="12dp"
-        android:background="@android:drawable/btn_dropdown"
-        android:popupBackground="@color/coffee_surface"
-        android:spinnerMode="dialog"
-        android:visibility="gone"
-        android:padding="8dp"/>
+            <TextView
+                android:id="@+id/tvDetalleCliente"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cliente"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:textAlignment="center"
+                android:fontFamily="@font/lora" />
 
-    <Spinner
-        android:id="@+id/spAccion"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginBottom="12dp"
-        android:background="@android:drawable/btn_dropdown"
-        android:popupBackground="@color/coffee_surface"
-        android:spinnerMode="dialog"
-        android:padding="8dp"/>
+            <TextView
+                android:id="@+id/tvDetalleFolio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Folio: "
+                android:textSize="13sp"
+                android:textColor="#FFFFFFCC"
+                android:textAlignment="center"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/lato"/>
 
-    <Button
-        android:id="@+id/btnAplicar"
-        android:layout_width="match_parent"
-        android:layout_height="59dp"
-        android:text="Asignar / Liberar"
-        android:textColor="@android:color/white"
-        android:textStyle="bold"
-        android:textSize="15sp"
-        app:backgroundTint="@color/coffee_primary"/>
+            <TextView
+                android:id="@+id/tvDetalleEstado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Estado"
+                android:background="@drawable/badge_estado"
+                android:backgroundTint="#FFFFFF33"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:textAllCaps="true"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/lato"/>
+        </LinearLayout>
 
-</LinearLayout>
+        <!-- ═══ BODY ═══ -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp"
+            android:background="@color/white">
+
+            <!-- Cafetería -->
+            <TextView
+                android:id="@+id/tvDetalleNombre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cafetería"
+                android:textSize="15sp"
+                android:textColor="@color/coffee_primary"
+                android:textStyle="bold"
+                android:fontFamily="@font/lato"
+                android:paddingBottom="12dp"/>
+
+            <!-- Divider -->
+            <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#E0E0E0" android:layout_marginBottom="12dp"/>
+
+            <!-- Info Grid -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:id="@+id/tvDetalleFecha"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Fecha"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/lato"
+                    android:textColor="@color/coffee_on_surface"
+                    app:drawableStartCompat="@drawable/ic_calendar"
+                    android:drawablePadding="6dp"/>
+
+                <TextView
+                    android:id="@+id/tvDetalleHora"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Hora"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/lato"
+                    android:textColor="@color/coffee_on_surface"
+                    app:drawableStartCompat="@drawable/ic_clock"
+                    android:drawablePadding="6dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="12dp">
+
+                <TextView
+                    android:id="@+id/tvDetallePersonas"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Personas"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/lato"
+                    android:textColor="@color/coffee_on_surface"
+                    app:drawableStartCompat="@drawable/ic_people"
+                    android:drawablePadding="6dp"/>
+
+                <TextView
+                    android:id="@+id/tvDetalleZona"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Zona"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/lato"
+                    android:textColor="@color/coffee_on_surface"
+                    app:drawableStartCompat="@drawable/ic_location"
+                    android:drawablePadding="6dp"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvDetalleOcasion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ocasión"
+                android:textSize="14sp"
+                android:textColor="@color/coffee_on_surface"
+                android:fontFamily="@font/lato"
+                android:paddingBottom="8dp"/>
+
+            <TextView
+                android:id="@+id/tvDetalleMesa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Mesa"
+                android:textSize="14sp"
+                android:textColor="@color/coffee_on_surface"
+                android:fontFamily="@font/lato"
+                android:paddingBottom="8dp"/>
+
+            <!-- Divider -->
+            <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#E0E0E0" android:layout_marginTop="4dp" android:layout_marginBottom="12dp"/>
+
+            <!-- Comentarios -->
+            <TextView
+                android:id="@+id/tvDetalleComentarios"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Comentarios"
+                android:textSize="14sp"
+                android:textColor="@color/text_color_secondary"
+                android:fontFamily="@font/lato"
+                android:paddingBottom="12dp"/>
+
+            <!-- Promoción -->
+            <TextView
+                android:id="@+id/tvDetallePromocion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Promoción: Sin promoción"
+                android:textColor="@color/coffee_accent"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:fontFamily="@font/lato"
+                android:paddingBottom="4dp"/>
+
+            <TextView
+                android:id="@+id/tvDetallePrecioPromocion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Precio: "
+                android:textSize="13sp"
+                android:textColor="@color/text_color_secondary"
+                android:visibility="gone"
+                android:fontFamily="@font/lato"
+                android:paddingBottom="12dp"/>
+
+            <!-- Divider -->
+            <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#E0E0E0" android:layout_marginBottom="12dp"/>
+
+            <!-- Mesas Recomendadas -->
+            <TextView
+                android:id="@+id/tvMesasRecomendadasLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Mesas disponibles en esta zona"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textColor="@color/coffee_primary"
+                android:fontFamily="@font/lato"
+                android:paddingBottom="6dp"/>
+
+            <LinearLayout
+                android:id="@+id/llMesasRecomendadas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="12dp"/>
+
+            <!-- Divider -->
+            <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#E0E0E0" android:layout_marginBottom="12dp"/>
+
+            <!-- Label mesas disponibles -->
+            <TextView
+                android:id="@+id/tvMesasDisponiblesLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="SELECCIONAR MESA"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_color_secondary"
+                android:visibility="gone"
+                android:fontFamily="@font/lato"
+                android:paddingBottom="6dp"/>
+
+            <Spinner
+                android:id="@+id/spMesasDisponibles"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="12dp"
+                android:background="@android:drawable/btn_dropdown"
+                android:popupBackground="@color/coffee_surface"
+                android:spinnerMode="dialog"
+                android:visibility="gone"
+                android:padding="8dp"/>
+
+            <!-- Spinner acción -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ACCIÓN A REALIZAR"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_color_secondary"
+                android:fontFamily="@font/lato"
+                android:paddingBottom="6dp"/>
+
+            <Spinner
+                android:id="@+id/spAccion"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="16dp"
+                android:background="@android:drawable/btn_dropdown"
+                android:popupBackground="@color/coffee_surface"
+                android:spinnerMode="dialog"
+                android:padding="8dp"/>
+
+            <Button
+                android:id="@+id/btnAplicar"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:text="APLICAR"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:fontFamily="@font/lato"
+                app:backgroundTint="@color/coffee_primary"
+                app:cornerRadius="12dp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
 </ScrollView>

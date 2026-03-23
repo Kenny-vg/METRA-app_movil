@@ -8,8 +8,6 @@
     android:background="@color/coffee_cream"
     tools:context=".login.LoginActivity">
 
-    <!-- CONTENEDOR DE TÍTULOS -->
-
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="150dp"
@@ -21,26 +19,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <!-- Tarjeta de Login -->
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardLogin"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="24dp"
         android:layout_marginTop="32dp"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="4dp"
+        app:cardCornerRadius="14dp"
+        app:cardElevation="2dp"
+        app:strokeWidth="0dp"
         app:cardBackgroundColor="@color/coffee_surface"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imageView2">
 
         <LinearLayout
-            android:id="@+id/layoutTitulos"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="24dp">
+            android:padding="32dp">
 
             <TextView
                 android:id="@+id/textView3"
@@ -58,14 +55,15 @@
                 style="@style/TextAppearance.Material3.BodyLarge"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="24dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="32dp"
                 android:text="Inicia sesión para comenzar"
+                android:fontFamily="@font/lato"
                 android:textAlignment="center"
-                android:textColor="@color/coffee_secondary" />
+                android:textColor="@color/text_color_secondary" />
 
-            <!-- Email -->
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
@@ -82,9 +80,10 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
+                android:layout_marginBottom="32dp"
                 android:hint="Contraseña"
                 app:placeholderText="*********"
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
@@ -98,25 +97,41 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!--Boton Login-->
-            <Button
-                android:id="@+id/btn_login"
-                style="@style/Widget.Material3.Button"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:text="INICIAR SESIÓN"
-                android:textSize="16sp"
-                app:backgroundTint="@color/coffee_primary" />
+                android:layout_height="wrap_content">
 
+                <Button
+                    android:id="@+id/btn_login"
+                    style="@style/Widget.Material3.Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:text="ACCEDER AL SISTEMA"
+                    android:fontFamily="@font/lato"
+                    android:textStyle="bold"
+                    android:textSize="14sp"
+                    app:backgroundTint="@color/coffee_primary"
+                    app:cornerRadius="12dp" />
+
+                <ProgressBar
+                    android:id="@+id/pbLoading"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:visibility="gone"
+                    android:indeterminateTint="@color/white" />
+            </FrameLayout>
 
             <TextView
                 android:id="@+id/tvRegistrarV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="16dp"
-                android:text="¿No tienes cuenta?"
-                android:textColor="@color/coffee_secondary" />
+                android:layout_marginTop="24dp"
+                android:text="¿Problemas para acceder?"
+                android:fontFamily="@font/lato"
+                android:textSize="13sp"
+                android:textColor="@color/text_color_secondary" />
 
             <TextView
                 android:id="@+id/tvRegistrar"
@@ -125,7 +140,9 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="4dp"
                 android:padding="8dp"
-                android:text="¡Avísale a tu supervisor!"
+                android:text="CONTACTAR SUPERVISOR"
+                android:fontFamily="@font/lato"
+                android:textSize="13sp"
                 android:textColor="@color/coffee_primary"
                 android:textStyle="bold" />
 

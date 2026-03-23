@@ -52,18 +52,18 @@ class ReservasActivity : BaseActivity() {
     private fun mostrarDetalleReserva(reserva: Reserva) {
         val dialogView = layoutInflater.inflate(R.layout.dialog_detalle_reserva, null)
 
-        dialogView.findViewById<TextView>(R.id.tvDetalleFolio).text = "Folio: ${reserva.folio}"
-        dialogView.findViewById<TextView>(R.id.tvDetalleCliente).text = "Cliente: ${reserva.nombreCliente ?: "Desconocido"}"
-        dialogView.findViewById<TextView>(R.id.tvDetalleNombre).text = "Cafetería: ${reserva.nombre}"
-        dialogView.findViewById<TextView>(R.id.tvDetalleFecha).text = "Fecha: ${reserva.fecha}"
-        dialogView.findViewById<TextView>(R.id.tvDetalleHora).text = "Hora: ${reserva.hora}"
-        dialogView.findViewById<TextView>(R.id.tvDetallePersonas).text = "Personas: ${reserva.personas}"
-        dialogView.findViewById<TextView>(R.id.tvDetalleEstado).text = "Estado: ${reserva.estado?.capitalize() ?: "Pendiente"}"
-        dialogView.findViewById<TextView>(R.id.tvDetalleOcasion).text = "Ocasión: ${reserva.ocasion}"
-        dialogView.findViewById<TextView>(R.id.tvDetalleZona).text = "Zona: ${reserva.zona}"
-        dialogView.findViewById<TextView>(R.id.tvDetalleMesa).text = "Mesa: ${reserva.mesa ?: "Sin asignar"}"
-        dialogView.findViewById<TextView>(R.id.tvDetalleComentarios).text = "Comentarios: ${reserva.comentarios ?: "Sin comentarios"}"
-        dialogView.findViewById<TextView>(R.id.tvDetallePromocion).text = "Promoción aplicada:\n${reserva.promocion}"
+        dialogView.findViewById<TextView>(R.id.tvDetalleFolio).text = reserva.folio
+        dialogView.findViewById<TextView>(R.id.tvDetalleCliente).text = reserva.nombreCliente ?: "Cliente desconocido"
+        dialogView.findViewById<TextView>(R.id.tvDetalleNombre).text = reserva.nombre
+        dialogView.findViewById<TextView>(R.id.tvDetalleFecha).text = reserva.fecha
+        dialogView.findViewById<TextView>(R.id.tvDetalleHora).text = reserva.hora
+        dialogView.findViewById<TextView>(R.id.tvDetallePersonas).text = "${reserva.personas} personas"
+        dialogView.findViewById<TextView>(R.id.tvDetalleEstado).text = (reserva.estado ?: "Pendiente").uppercase()
+        dialogView.findViewById<TextView>(R.id.tvDetalleOcasion).text = "OCASIÓN: ${reserva.ocasion}"
+        dialogView.findViewById<TextView>(R.id.tvDetalleZona).text = "ZONA: ${reserva.zona}"
+        dialogView.findViewById<TextView>(R.id.tvDetalleMesa).text = "MESA: ${reserva.mesa ?: "Sin asignar"}"
+        dialogView.findViewById<TextView>(R.id.tvDetalleComentarios).text = "NOTAS: ${reserva.comentarios ?: "Sin comentarios"}"
+        dialogView.findViewById<TextView>(R.id.tvDetallePromocion).text = "PROMOCIÓN: ${reserva.promocion}"
 
         // Mostrar precio de promoción
         val tvPrecio = dialogView.findViewById<TextView>(R.id.tvDetallePrecioPromocion)

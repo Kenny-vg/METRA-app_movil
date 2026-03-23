@@ -15,5 +15,6 @@ data class Reserva(
     var promocion: String = "Sin promoción",
     var precioPromocion: String = "",
     var ocasion: String = "Sin ocasión",
+    var imagenUrl: String? = null,
     var estado: String? = null // "Pendiente", "Llegó", "No llegó", etc.
 )

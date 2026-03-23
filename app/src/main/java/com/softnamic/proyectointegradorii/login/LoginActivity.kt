@@ -2,11 +2,14 @@ package com.softnamic.proyectointegradorii.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.softnamic.proyectointegradorii.R
 import com.softnamic.proyectointegradorii.inicio.InicioActivity
 import com.softnamic.proyectointegradorii.core.data.RestaurantRepository
@@ -17,6 +20,10 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var viewModel: LoginViewModel
     private lateinit var etEmail: TextInputEditText
     private lateinit var etPassword: TextInputEditText
+    private lateinit var tilEmail: TextInputLayout
+    private lateinit var tilPassword: TextInputLayout
+    private lateinit var btnLogin: Button
+    private lateinit var pbLoading: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,9 +31,12 @@ class LoginActivity : AppCompatActivity() {
 
         viewModel = ViewModelProvider(this)[LoginViewModel::class.java]
 
-        val btnLogin = findViewById<Button>(R.id.btn_login)
+        btnLogin = findViewById(R.id.btn_login)
         etEmail = findViewById(R.id.etEmail)
         etPassword = findViewById(R.id.etPassword)
+        tilEmail = findViewById(R.id.tilEmail)
+        tilPassword = findViewById(R.id.tilPassword)
+        pbLoading = findViewById(R.id.pbLoading)
 
         btnLogin.setOnClickListener {
             val email = etEmail.text.toString().trim()
@@ -39,23 +49,31 @@ class LoginActivity : AppCompatActivity() {
 
     private fun observeViewModel() {
         viewModel.state.observe(this) { state ->
-            etEmail.error = null
-            etPassword.error = null
+            // Limpiar errores previos
+            tilEmail.error = null
+            tilPassword.error = null
+            
+            // Estado por defecto: no cargando
+            pbLoading.visibility = View.GONE
+            btnLogin.isEnabled = true
+            btnLogin.text = "ACCEDER AL SISTEMA"
 
             when (state) {
-                is LoginState.Loading -> { }
+                is LoginState.Loading -> {
+                    pbLoading.visibility = View.VISIBLE
+                    btnLogin.isEnabled = false
+                    btnLogin.text = "" // Ocultar texto para que se vea el spinner
+                }
 
                 is LoginState.Success -> {
-                    // 1. Guardar en SharedPreferences
                     val prefs = getSharedPreferences("MY_APP", MODE_PRIVATE)
                     prefs.edit()
                         .putString("TOKEN", state.token)
                         .putString("ROLE", state.role)
                         .putString("NAME", state.name)
-                        .putString("CAFE_NAME", state.cafeNombre) // Guardamos el nombre de la cafeteria
+                        .putString("CAFE_NAME", state.cafeNombre)
                         .apply()
 
-                    // 2. ACTUALIZAR EL REPOSITORIO Y EL UPDATER
                     RestaurantRepository.currentToken = state.token
                     DataUpdater.startUpdating()
 
@@ -63,9 +81,15 @@ class LoginActivity : AppCompatActivity() {
                     finish()
                 }
 
-                is LoginState.EmailError -> { etEmail.error = state.message }
-                is LoginState.PasswordError -> { etPassword.error = state.message }
-                is LoginState.Error -> { Toast.makeText(this, state.message, Toast.LENGTH_LONG).show() }
+                is LoginState.EmailError -> { 
+                    tilEmail.error = state.message 
+                }
+                is LoginState.PasswordError -> { 
+                    tilPassword.error = state.message 
+                }
+                is LoginState.Error -> { 
+                    Toast.makeText(this, state.message, Toast.LENGTH_LONG).show() 
+                }
                 is LoginState.Idle -> { }
             }
         }

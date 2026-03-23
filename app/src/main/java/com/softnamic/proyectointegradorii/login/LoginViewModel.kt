@@ -15,8 +15,6 @@ class LoginViewModel : ViewModel() {
     val state: LiveData<LoginState> = _state
 
     fun login(email: String, password: String) {
-        _state.value = LoginState.Idle
-
         if (email.isBlank()) {
             _state.value = LoginState.EmailError("El correo es obligatorio")
             return
@@ -55,16 +53,17 @@ class LoginViewModel : ViewModel() {
                             _state.value = LoginState.Error("No tienes permisos para acceder")
                         }
                     } else {
-                        _state.value = LoginState.Error(body?.message ?: "Usuario o contraseña no válidos")
+                        _state.value = LoginState.PasswordError(body?.message ?: "Usuario o contraseña no válidos")
                     }
                 } else {
-                    // Manejo de errores por código de estado
                     val errorMessage = when (response.code()) {
-                        401 -> "El usuario no existe o la contraseña es incorrecta"
+                        401 -> {
+                            _state.value = LoginState.PasswordError("Contraseña o usuario incorrectos")
+                            return@launch
+                        }
                         404 -> "Servicio no disponible"
                         500 -> "Error en el servidor. Inténtalo más tarde"
                         else -> {
-                            // Intentar extraer el mensaje de error del body de la respuesta
                             try {
                                 val errorBody = response.errorBody()?.string()
                                 val json = JSONObject(errorBody ?: "")
@@ -77,7 +76,6 @@ class LoginViewModel : ViewModel() {
                     _state.value = LoginState.Error(errorMessage)
                 }
             } catch (e: Exception) {
-                // El CATCH para errores de red o excepciones fatales
                 e.printStackTrace()
                 _state.value = LoginState.Error("No se pudo conectar con el servidor. Revisa tu internet.")
             }

@@ -23,6 +23,8 @@ class ReservaAdapter(
         val personas: TextView = view.findViewById(R.id.tvPersonas)
         val estado: TextView = view.findViewById(R.id.tvEstado)
         val txtPromocion: TextView = view.findViewById(R.id.txtPromocion)
+        val tvZona: TextView = view.findViewById(R.id.tvZona)
+        val viewEstadoBar = view.findViewById<View>(R.id.viewEstadoBar)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -33,54 +35,84 @@ class ReservaAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val reserva = getItem(position)
-
-        holder.folio.text = "Folio: ${reserva.folio}"
-        holder.cliente.text = "Cliente: ${reserva.nombreCliente ?: "Desconocido"}"
-        holder.fecha.text = "Fecha: ${reserva.fecha}"
-        holder.hora.text = "Hora: ${reserva.hora}"
-        holder.personas.text = "Personas: ${reserva.personas}"
-
-        val estadoTxt = reserva.estado?.lowercase() ?: "pendiente"
         val ctx = holder.itemView.context
+
+        // Header
+        holder.cliente.text = reserva.nombreCliente ?: "Cliente desconocido"
+        holder.folio.text = reserva.folio
+
+        // Body sin emojis, los iconos ahora están en el XML
+        holder.fecha.text = reserva.fecha
+        holder.hora.text = reserva.hora
+        holder.personas.text = "${reserva.personas} personas"
+        holder.tvZona.text = reserva.zona ?: "Sin zona"
+
+        // Badge de estado y barra de color
+        val estadoTxt = reserva.estado?.lowercase() ?: "pendiente"
         val card = holder.itemView as com.google.android.material.card.MaterialCardView
-        
+
+        // Reset card color
+        card.setCardBackgroundColor(Color.WHITE)
+
         when (estadoTxt) {
             "pendiente" -> {
-                holder.estado.text = "Estado: Pendiente"
+                holder.estado.text = "PENDIENTE"
                 holder.estado.setTextColor(ContextCompat.getColor(ctx, R.color.reserva_pendiente_text))
-                card.setCardBackgroundColor(ContextCompat.getColor(ctx, R.color.reserva_pendiente_bg))
+                val bgColor = ContextCompat.getColor(ctx, R.color.reserva_pendiente_bg)
+                val barColor = ContextCompat.getColor(ctx, R.color.reserva_pendiente_text)
+                holder.estado.backgroundTintList = android.content.res.ColorStateList.valueOf(bgColor)
+                holder.viewEstadoBar.setBackgroundColor(barColor)
             }
             "en_curso" -> {
-                holder.estado.text = "Estado: En curso (Cliente en mesa)"
+                holder.estado.text = "EN CURSO"
                 holder.estado.setTextColor(ContextCompat.getColor(ctx, R.color.reserva_activa_text))
-                card.setCardBackgroundColor(ContextCompat.getColor(ctx, R.color.reserva_activa_bg))
+                val bgColor = ContextCompat.getColor(ctx, R.color.reserva_activa_bg)
+                val barColor = ContextCompat.getColor(ctx, R.color.reserva_activa_text)
+                holder.estado.backgroundTintList = android.content.res.ColorStateList.valueOf(bgColor)
+                holder.viewEstadoBar.setBackgroundColor(barColor)
             }
             "finalizada" -> {
-                holder.estado.text = "Estado: Finalizada"
+                holder.estado.text = "FINALIZADA"
                 holder.estado.setTextColor(Color.parseColor("#757575"))
-                card.setCardBackgroundColor(Color.parseColor("#E0E0E0"))
+                val bgColor = Color.parseColor("#E0E0E0")
+                val barColor = Color.parseColor("#9E9E9E")
+                holder.estado.backgroundTintList = android.content.res.ColorStateList.valueOf(bgColor)
+                holder.viewEstadoBar.setBackgroundColor(barColor)
+                card.setCardBackgroundColor(Color.parseColor("#F5F5F5"))
             }
             "cancelada" -> {
-                holder.estado.text = "Estado: Cancelada"
+                holder.estado.text = "CANCELADA"
                 holder.estado.setTextColor(ContextCompat.getColor(ctx, R.color.reserva_cancelada_text))
-                card.setCardBackgroundColor(ContextCompat.getColor(ctx, R.color.reserva_cancelada_bg))
+                val bgColor = ContextCompat.getColor(ctx, R.color.reserva_cancelada_bg)
+                val barColor = ContextCompat.getColor(ctx, R.color.reserva_cancelada_text)
+                holder.estado.backgroundTintList = android.content.res.ColorStateList.valueOf(bgColor)
+                holder.viewEstadoBar.setBackgroundColor(barColor)
+                card.setCardBackgroundColor(Color.parseColor("#FFF5F5"))
             }
             "no_show" -> {
-                holder.estado.text = "Estado: No se presentó"
+                holder.estado.text = "NO SHOW"
                 holder.estado.setTextColor(ContextCompat.getColor(ctx, R.color.reserva_noshow_text))
-                card.setCardBackgroundColor(ContextCompat.getColor(ctx, R.color.reserva_noshow_bg))
+                val bgColor = ContextCompat.getColor(ctx, R.color.reserva_noshow_bg)
+                val barColor = ContextCompat.getColor(ctx, R.color.reserva_noshow_text)
+                holder.estado.backgroundTintList = android.content.res.ColorStateList.valueOf(bgColor)
+                holder.viewEstadoBar.setBackgroundColor(barColor)
+                card.setCardBackgroundColor(Color.parseColor("#FFF5F5"))
             }
             else -> {
-                holder.estado.text = "Estado: ${reserva.estado?.replaceFirstChar { it.uppercase() } ?: "Pendiente"}"
+                holder.estado.text = estadoTxt.uppercase()
                 holder.estado.setTextColor(ContextCompat.getColor(ctx, R.color.text_color_secondary))
-                card.setCardBackgroundColor(ContextCompat.getColor(ctx, R.color.coffee_surface))
+                val bgColor = Color.parseColor("#F0F0F0")
+                val barColor = Color.parseColor("#9E9E9E")
+                holder.estado.backgroundTintList = android.content.res.ColorStateList.valueOf(bgColor)
+                holder.viewEstadoBar.setBackgroundColor(barColor)
             }
         }
 
-        holder.txtPromocion.text = reserva.promocion
-        if (reserva.promocion == "Sin promoción") {
+        // Promoción
+        if (reserva.promocion == "Sin promoción" || reserva.promocion.isNullOrBlank()) {
             holder.txtPromocion.visibility = View.GONE
         } else {
+            holder.txtPromocion.text = "PROMOCIÓN: ${reserva.promocion}"
             holder.txtPromocion.visibility = View.VISIBLE
         }
 
@@ -96,7 +128,6 @@ class ReservaDiffCallback : DiffUtil.ItemCallback<Reserva>() {
     }
 
     override fun areContentsTheSame(oldItem: Reserva, newItem: Reserva): Boolean {
-        // En DataClasses, == compara todos los campos
         return oldItem == newItem
     }
 }

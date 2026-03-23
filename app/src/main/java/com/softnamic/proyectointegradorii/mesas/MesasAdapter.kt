@@ -20,6 +20,7 @@ class MesasAdapter(
         val tvCapacidad: TextView = itemView.findViewById(R.id.tvMesaCapacidad)
         val tvZona: TextView = itemView.findViewById(R.id.tvMesaZona)
         val tvEstado: TextView = itemView.findViewById(R.id.tvMesaEstado)
+        val viewEstadoBar: View = itemView.findViewById(R.id.viewEstadoBar)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MesaViewHolder {
@@ -30,33 +31,46 @@ class MesasAdapter(
 
     override fun onBindViewHolder(holder: MesaViewHolder, position: Int) {
         val mesa = getItem(position)
+        val ctx = holder.itemView.context
+        val card = holder.itemView as com.google.android.material.card.MaterialCardView
 
         holder.tvNombre.text = mesa.nombre
-        holder.tvCapacidad.text = "Capacidad: ${mesa.capacidad} personas"
+        holder.tvCapacidad.text = "Hasta ${mesa.capacidad} personas"
         
         val nombreZonaLimpio = mesa.zona.replace(" (SUSPENDIDA)", "", ignoreCase = true)
-        holder.tvZona.text = "\uD83D\uDCCD Zona: $nombreZonaLimpio"
+        holder.tvZona.text = nombreZonaLimpio
 
         if (mesa.activo == 0) {
-            holder.tvEstado.text = "Desactivada"
+            // Desactivada
+            holder.tvEstado.text = "DESACTIVADA"
+            holder.tvEstado.setTextColor(android.graphics.Color.WHITE)
             holder.tvEstado.backgroundTintList = ColorStateList.valueOf(android.graphics.Color.parseColor("#9E9E9E"))
-            (holder.itemView as? com.google.android.material.card.MaterialCardView)?.setCardBackgroundColor(android.graphics.Color.parseColor("#E0E0E0"))
+            holder.viewEstadoBar.setBackgroundColor(android.graphics.Color.parseColor("#9E9E9E"))
+            card.setCardBackgroundColor(android.graphics.Color.parseColor("#F0F0F0"))
+            card.alpha = 0.7f
         } else {
+            card.alpha = 1.0f
             when (mesa.estado) {
                 EstadoMesa.DISPONIBLE -> {
-                    holder.tvEstado.text = "Disponible"
-                    holder.tvEstado.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(holder.itemView.context, R.color.status_available))
-                    (holder.itemView as? com.google.android.material.card.MaterialCardView)?.setCardBackgroundColor(android.graphics.Color.WHITE)
+                    holder.tvEstado.text = "DISPONIBLE"
+                    holder.tvEstado.setTextColor(android.graphics.Color.WHITE)
+                    holder.tvEstado.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(ctx, R.color.status_available))
+                    holder.viewEstadoBar.setBackgroundColor(ContextCompat.getColor(ctx, R.color.status_available))
+                    card.setCardBackgroundColor(android.graphics.Color.WHITE)
                 }
                 EstadoMesa.OCUPADA -> {
-                    holder.tvEstado.text = "Ocupada"
-                    holder.tvEstado.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(holder.itemView.context, R.color.status_occupied))
-                    (holder.itemView as? com.google.android.material.card.MaterialCardView)?.setCardBackgroundColor(android.graphics.Color.parseColor("#FFF3E0"))
+                    holder.tvEstado.text = "OCUPADA"
+                    holder.tvEstado.setTextColor(android.graphics.Color.WHITE)
+                    holder.tvEstado.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(ctx, R.color.status_occupied))
+                    holder.viewEstadoBar.setBackgroundColor(ContextCompat.getColor(ctx, R.color.status_occupied))
+                    card.setCardBackgroundColor(android.graphics.Color.parseColor("#FFF8F6"))
                 }
                 EstadoMesa.RESERVADA -> {
-                    holder.tvEstado.text = "Reservada"
-                    holder.tvEstado.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(holder.itemView.context, R.color.status_reserved))
-                    (holder.itemView as? com.google.android.material.card.MaterialCardView)?.setCardBackgroundColor(android.graphics.Color.WHITE)
+                    holder.tvEstado.text = "RESERVADA"
+                    holder.tvEstado.setTextColor(android.graphics.Color.WHITE)
+                    holder.tvEstado.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(ctx, R.color.status_reserved))
+                    holder.viewEstadoBar.setBackgroundColor(ContextCompat.getColor(ctx, R.color.status_reserved))
+                    card.setCardBackgroundColor(android.graphics.Color.parseColor("#FFFBF0"))
                 }
             }
         }

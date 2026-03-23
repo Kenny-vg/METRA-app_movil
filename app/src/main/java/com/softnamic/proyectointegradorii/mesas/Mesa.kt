@@ -8,7 +8,8 @@ data class Mesa(
     val zonaId: Int = 0,
     var estado: EstadoMesa,
     val activo: Int = 1,
-    var ocupacionId: Int? = null
+    var ocupacionId: Int? = null,
+    val imagenUrl: String? = null
 )
 
 enum class EstadoMesa {

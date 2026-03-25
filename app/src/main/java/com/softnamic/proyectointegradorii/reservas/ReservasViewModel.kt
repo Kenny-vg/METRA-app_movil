@@ -45,9 +45,9 @@ class ReservasViewModel : ViewModel() {
         }
     }
 
-    fun abrirMesa(idReserva: Int, idMesa: Int, zonaId: Int, numPersonas: Int, comentarios: String?, onResult: (Boolean, String) -> Unit) {
+    fun abrirMesa(idReserva: Int, idMesa: Int, zonaId: Int, numPersonas: Int, comentarios: String?, nombreCliente: String?, onResult: (Boolean, String) -> Unit) {
         viewModelScope.launch {
-            val (exito, mensaje) = RestaurantRepository.abrirMesa(idReserva, idMesa, zonaId, numPersonas, comentarios)
+            val (exito, mensaje) = RestaurantRepository.abrirMesa(idReserva, idMesa, zonaId, numPersonas, comentarios, nombreCliente)
             onResult(exito, mensaje)
         }
     }

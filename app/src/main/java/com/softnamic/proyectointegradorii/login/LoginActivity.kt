@@ -56,7 +56,7 @@ class LoginActivity : AppCompatActivity() {
             // Estado por defecto: no cargando
             pbLoading.visibility = View.GONE
             btnLogin.isEnabled = true
-            btnLogin.text = "ACCEDER AL SISTEMA"
+            btnLogin.text = "INICIAR SESIÓN"
 
             when (state) {
                 is LoginState.Loading -> {

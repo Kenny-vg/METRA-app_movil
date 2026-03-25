@@ -20,15 +20,6 @@
             android:padding="20dp"
             android:gravity="center_horizontal">
 
-            <ImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:src="@drawable/ic_info"
-                android:background="@drawable/info_row_background"
-                app:tint="@color/coffee_primary_variant"
-                android:padding="8dp"
-                android:layout_marginBottom="12dp"
-                android:importantForAccessibility="no" />
 
             <TextView
                 android:id="@+id/tvDetalleCliente"
@@ -58,7 +49,6 @@
                 android:layout_height="wrap_content"
                 android:text="Estado"
                 android:background="@drawable/badge_estado"
-                android:backgroundTint="#FFFFFF33"
                 android:textColor="@color/white"
                 android:textStyle="bold"
                 android:textSize="12sp"
@@ -283,14 +273,14 @@
             <Button
                 android:id="@+id/btnAplicar"
                 android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:text="APLICAR"
-                android:textColor="@android:color/white"
-                android:textStyle="bold"
-                android:textSize="15sp"
+                android:layout_height="65dp"
                 android:fontFamily="@font/lato"
+                android:text="CONFIRMAR"
+                android:textColor="@android:color/white"
+                android:textSize="15dp"
+                android:textStyle="bold"
                 app:backgroundTint="@color/coffee_primary"
-                app:cornerRadius="12dp"/>
+                app:cornerRadius="12dp" />
 
         </LinearLayout>
 

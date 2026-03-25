@@ -71,7 +71,7 @@ interface ApiService {
 }
 
 data class AbrirMesaRequest(
-    val mesa_id: Int,
+    val mesa_ids: List<Int>,
     val zona_id: Int,
     val reservacion_id: Int? = null,
     val numero_personas: Int? = null,

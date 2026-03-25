@@ -2,7 +2,7 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="splash_background">@color/coffee_cream_background</color>
+    <color name="splash_background">#F5F2EC</color>
     <color name="border_light">#E0E0E0</color>
 
     <!-- Professional Coffee Theme Palette -->
@@ -46,8 +46,8 @@
     <color name="mesa_reservada">@color/status_reserved</color>
 
     <!-- Reservation Status Colors -->
-    <color name="reserva_pendiente_bg">#FFF8E1</color>       <!-- Light Amber -->
-    <color name="reserva_pendiente_text">#F57F17</color>     <!-- Dark Amber -->
+    <color name="reserva_pendiente_bg">#FFF3E0</color>       <!-- Light Orange -->
+    <color name="reserva_pendiente_text">#E65100</color>     <!-- Much Darker Orange -->
     <color name="reserva_confirmada_bg">#E3F2FD</color>      <!-- Light Blue -->
     <color name="reserva_confirmada_text">#1565C0</color>    <!-- Dark Blue -->
     <color name="reserva_activa_bg">#E8F5E9</color>          <!-- Light Green -->

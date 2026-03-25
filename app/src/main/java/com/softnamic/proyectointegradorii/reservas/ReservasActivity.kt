@@ -202,11 +202,14 @@ class ReservasActivity : BaseActivity() {
                 val mesaSeleccionada = mesasDisponibles[selectedMesaIdx]
 
                 dialog.dismiss()
-                Toast.makeText(this, "Asignando mesa...", Toast.LENGTH_SHORT).show()
-                viewModel.abrirMesa(reserva.id, mesaSeleccionada.id, mesaSeleccionada.zonaId, reserva.personas, reserva.comentarios) { exito, msg ->
-                    runOnUiThread {
-                        if (exito) Toast.makeText(this, "✅ Operación exitosa", Toast.LENGTH_SHORT).show()
-                        else Toast.makeText(this, "Error: $msg", Toast.LENGTH_LONG).show()
+
+                if (accionSeleccionada == "Llegó y asignar mesa" || accionSeleccionada == "Asignar mesa") {
+                    Toast.makeText(this, "Asignando mesa...", Toast.LENGTH_SHORT).show()
+                    viewModel.abrirMesa(reserva.id, mesaSeleccionada.id, mesaSeleccionada.zonaId, reserva.personas, reserva.comentarios, reserva.nombreCliente) { exito, msg ->
+                        runOnUiThread {
+                            if (exito) Toast.makeText(this, "✅ Operación exitosa", Toast.LENGTH_SHORT).show()
+                            else Toast.makeText(this, "Error: $msg", Toast.LENGTH_LONG).show()
+                        }
                     }
                 }
             } else if (accionSeleccionada == "Cancelar reservación") {

@@ -101,11 +101,11 @@ object RestaurantRepository {
                     
                     val nombreZonaLimpio = m.zona.nombre_zona.replace(" (SUSPENDIDA)", "")
                     
-                    // Verificar estado real desde mesas-estado
+                    // Verificar estado real desde mesas-estado o verificar si existe una ocupación activa
                     val estadoReal = estadoMesasMap[m.id]
-                    val estadoCalculado = if (estadoReal?.estado == "ocupada") EstadoMesa.OCUPADA else EstadoMesa.DISPONIBLE
                     // Obtener ocupacion_id desde el endpoint de ocupaciones
                     val ocupId = ocupacionesPorMesa[m.id]?.id
+                    val estadoCalculado = if (estadoReal?.estado == "ocupada" || ocupId != null) EstadoMesa.OCUPADA else EstadoMesa.DISPONIBLE
 
                     Mesa(
                         id = m.id,
@@ -257,7 +257,7 @@ object RestaurantRepository {
         }
     }
 
-    suspend fun abrirMesa(idReserva: Int, idMesa: Int, zonaId: Int, numPersonas: Int, comentarios: String?): Pair<Boolean, String> {
+    suspend fun abrirMesa(idReserva: Int, idMesa: Int, zonaId: Int, numPersonas: Int, comentarios: String?, nombreCliente: String? = null): Pair<Boolean, String> {
         if (currentToken.isEmpty()) {
             Log.e(TAG, "❌ TOKEN VACÍO - No se puede abrir mesa")
             return Pair(false, "Token vacío, inicia sesión de nuevo")
@@ -265,21 +265,39 @@ object RestaurantRepository {
         val authHeader = "Bearer $currentToken"
         return try {
             val request = com.softnamic.proyectointegradorii.core.network.AbrirMesaRequest(
-                mesa_id = idMesa,
+                mesa_ids = listOf(idMesa),
                 zona_id = zonaId,
                 reservacion_id = idReserva,
                 numero_personas = numPersonas,
                 tipo = "reservacion",
-                comentarios = comentarios
+                comentarios = comentarios,
+                nombre_cliente = nombreCliente ?: "Cliente"
             )
             Log.d(TAG, "📤 Enviando abrir mesa: mesa_id=$idMesa, zona_id=$zonaId, reservacion_id=$idReserva, personas=$numPersonas, tipo=reservacion")
             val response = RetrofitClient.instance.abrirMesa(authHeader, request)
             if (response.isSuccessful) {
-                Log.d(TAG, "✅ Mesa abierta con éxito para la reservación $idReserva")
-                // Fetch reservations and tables again to update the local lists
-                fetchReservaciones()
-                fetchMesasYZonas()
-                Pair(true, "Mesa abierta con éxito")
+                // Leer el body para verificar que no es un falso HTTP 200 con success: false
+                val bodyStr = response.body()?.string() ?: ""
+                var isReallySuccess = true
+                var errMsg = ""
+                try {
+                    val jsonObj = org.json.JSONObject(bodyStr)
+                    if (jsonObj.has("success") && !jsonObj.getBoolean("success")) {
+                        isReallySuccess = false
+                        errMsg = jsonObj.optString("message", "Error del servidor")
+                    }
+                } catch (e: Exception) {}
+
+                if (isReallySuccess) {
+                    Log.d(TAG, "✅ Mesa abierta con éxito para la reservación $idReserva")
+                    // Fetch reservations and tables again to update the local lists
+                    fetchReservaciones()
+                    fetchMesasYZonas()
+                    Pair(true, "Mesa abierta con éxito")
+                } else {
+                    Log.e(TAG, "❌ Error lógico al abrir mesa: $errMsg")
+                    Pair(false, errMsg)
+                }
             } else {
                 val errorBody = response.errorBody()?.string() ?: "Sin detalles"
                 Log.e(TAG, "❌ Error al abrir mesa: ${response.code()} - $errorBody")

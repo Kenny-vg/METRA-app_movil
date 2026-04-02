@@ -138,10 +138,15 @@ object RestaurantRepository {
         val sdf = java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale("es", "MX"))
         sdf.timeZone = java.util.TimeZone.getTimeZone("America/Mexico_City")
         val fechaActual = sdf.format(java.util.Date())
+        
+        val cal = java.util.Calendar.getInstance(java.util.TimeZone.getTimeZone("America/Mexico_City"))
+        cal.add(java.util.Calendar.DAY_OF_YEAR, 30)
+        val fechaHasta = sdf.format(cal.time)
+        
         val rol = if (currentRole.equals("gerente", ignoreCase = true)) "gerente" else "staff"
         
         try {
-            val response = RetrofitClient.instance.getReservaciones(authHeader, rol, fechaActual)
+            val response = RetrofitClient.instance.getReservaciones(authHeader, rol, fechaActual, fechaHasta)
             if (response.isSuccessful) {
                 val reservacionesApi = response.body()?.data ?: emptyList()
                 val nuevasReservas = reservacionesApi.map { r ->
@@ -257,7 +262,7 @@ object RestaurantRepository {
         }
     }
 
-    suspend fun abrirMesa(idReserva: Int, idMesa: Int, zonaId: Int, numPersonas: Int, comentarios: String?, nombreCliente: String? = null): Pair<Boolean, String> {
+    suspend fun abrirMesa(idReserva: Int?, mesaIds: List<Int>, zonaId: Int, numPersonas: Int, comentarios: String?, nombreCliente: String? = null): Pair<Boolean, String> {
         if (currentToken.isEmpty()) {
             Log.e(TAG, "❌ TOKEN VACÍO - No se puede abrir mesa")
             return Pair(false, "Token vacío, inicia sesión de nuevo")
@@ -265,7 +270,7 @@ object RestaurantRepository {
         val authHeader = "Bearer $currentToken"
         return try {
             val request = com.softnamic.proyectointegradorii.core.network.AbrirMesaRequest(
-                mesa_ids = listOf(idMesa),
+                mesa_ids = mesaIds,
                 zona_id = zonaId,
                 reservacion_id = idReserva,
                 numero_personas = numPersonas,
@@ -273,7 +278,7 @@ object RestaurantRepository {
                 comentarios = comentarios,
                 nombre_cliente = nombreCliente ?: "Cliente"
             )
-            Log.d(TAG, "📤 Enviando abrir mesa: mesa_id=$idMesa, zona_id=$zonaId, reservacion_id=$idReserva, personas=$numPersonas, tipo=reservacion")
+            Log.d(TAG, "📤 Enviando abrir mesa: mesa_ids=$mesaIds, zona_id=$zonaId, reservacion_id=$idReserva, personas=$numPersonas, tipo=${if(idReserva == null) "walkin" else "reservacion"}")
             val response = RetrofitClient.instance.abrirMesa(authHeader, request)
             if (response.isSuccessful) {
                 // Leer el body para verificar que no es un falso HTTP 200 con success: false

@@ -48,6 +48,33 @@
         android:hint="Buscar reserva..."
         app:layout_constraintTop_toBottomOf="@id/tvTitulo"/>
 
+    <LinearLayout
+        android:id="@+id/llTabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/spacing_medium"
+        app:layout_constraintTop_toBottomOf="@id/etBuscar">
+
+        <Button
+            android:id="@+id/btnHoy"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="HOY"
+            android:layout_marginEnd="4dp" />
+
+        <Button
+            android:id="@+id/btnProximas"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="PRÓXIMAS"
+            android:layout_marginStart="4dp" />
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvReservas"
         android:layout_width="match_parent"
@@ -55,7 +82,7 @@
         android:padding="@dimen/spacing_small"
         android:scrollbars="vertical"
         android:fadeScrollbars="false"
-        app:layout_constraintTop_toBottomOf="@id/etBuscar"
+        app:layout_constraintTop_toBottomOf="@id/llTabs"
         app:layout_constraintBottom_toTopOf="@id/bottom_navigation"/>
 
     <!-- MENÚ INFERIOR (CORREGIDO) -->

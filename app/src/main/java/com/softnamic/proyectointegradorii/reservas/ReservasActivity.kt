@@ -41,8 +41,14 @@ class ReservasActivity : BaseActivity() {
         }
         recycler.adapter = adapter
 
+        val btnHoy = findViewById<Button>(R.id.btnHoy)
+        val btnProximas = findViewById<Button>(R.id.btnProximas)
+        
+        btnHoy.setOnClickListener { viewModel.seleccionarTab("Hoy") }
+        btnProximas.setOnClickListener { viewModel.seleccionarTab("Próximas") }
+
         configurarBuscador()
-        observarViewModel()
+        observarViewModel(btnHoy, btnProximas)
     }
 
     private fun configurarBuscador() {
@@ -55,11 +61,28 @@ class ReservasActivity : BaseActivity() {
         })
     }
 
-    private fun observarViewModel() {
+    private fun observarViewModel(btnHoy: Button, btnProximas: Button) {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.reservasFiltradas.collectLatest { reservas ->
-                    adapter.submitList(reservas)
+                launch {
+                    viewModel.reservasFiltradas.collectLatest { reservas ->
+                        adapter.submitList(reservas)
+                    }
+                }
+                launch {
+                    viewModel.filtroTabs.collectLatest { tab ->
+                        if (tab == "Hoy") {
+                            btnHoy.setBackgroundColor(androidx.core.content.ContextCompat.getColor(this@ReservasActivity, R.color.coffee_primary))
+                            btnHoy.setTextColor(android.graphics.Color.WHITE)
+                            btnProximas.setBackgroundColor(android.graphics.Color.TRANSPARENT)
+                            btnProximas.setTextColor(androidx.core.content.ContextCompat.getColor(this@ReservasActivity, R.color.coffee_primary))
+                        } else {
+                            btnProximas.setBackgroundColor(androidx.core.content.ContextCompat.getColor(this@ReservasActivity, R.color.coffee_primary))
+                            btnProximas.setTextColor(android.graphics.Color.WHITE)
+                            btnHoy.setBackgroundColor(android.graphics.Color.TRANSPARENT)
+                            btnHoy.setTextColor(androidx.core.content.ContextCompat.getColor(this@ReservasActivity, R.color.coffee_primary))
+                        }
+                    }
                 }
             }
         }
@@ -94,34 +117,10 @@ class ReservasActivity : BaseActivity() {
             tvOcasion.visibility = View.GONE
         }
 
-        val llMesasRecomendadas = dialogView.findViewById<LinearLayout>(R.id.llMesasRecomendadas)
-        val mesasEnZona = viewModel.mesas.value.filter {
-            it.zona.equals(reserva.zona, ignoreCase = true) &&
-            it.estado == com.softnamic.proyectointegradorii.mesas.EstadoMesa.DISPONIBLE &&
-            it.activo == 1
-        }
 
-        if (mesasEnZona.isEmpty()) {
-            val tvVacio = TextView(this).apply {
-                text = "No hay mesas disponibles en la zona \"${reserva.zona}\""
-                setTextColor(android.graphics.Color.parseColor("#999999"))
-                textSize = 13f
-                setPadding(0, 4, 0, 4)
-            }
-            llMesasRecomendadas.addView(tvVacio)
-        } else {
-            mesasEnZona.forEach { mesa ->
-                val tvMesa = TextView(this).apply {
-                    text = "• ${mesa.nombre}  —  Capacidad: ${mesa.capacidad} personas"
-                    textSize = 14f
-                    setPadding(0, 6, 0, 6)
-                }
-                llMesasRecomendadas.addView(tvMesa)
-            }
-        }
 
         val spinner = dialogView.findViewById<Spinner>(R.id.spAccion)
-        val spMesas = dialogView.findViewById<Spinner>(R.id.spMesasDisponibles)
+        val llMesasCheckboxes = dialogView.findViewById<LinearLayout>(R.id.llMesasCheckboxes)
         val tvMesasDisponiblesLabel = dialogView.findViewById<TextView>(R.id.tvMesasDisponiblesLabel)
 
         val acciones = mutableListOf<String>()
@@ -129,15 +128,16 @@ class ReservasActivity : BaseActivity() {
 
         if (estadoActual == "pendiente") {
             acciones.add("Llegó y asignar mesa")
-            acciones.add("Sólo marcar llegada")
             acciones.add("Cancelar reservación")
         } else if (estadoActual == "en_curso") {
             acciones.add("Asignar mesa")
         }
 
+        val checkBoxes = mutableListOf<CheckBox>()
+
         if (acciones.isEmpty()) {
             spinner.visibility = View.GONE
-            spMesas.visibility = View.GONE
+            llMesasCheckboxes.visibility = View.GONE
             tvMesasDisponiblesLabel.visibility = View.GONE
             dialogView.findViewById<Button>(R.id.btnAplicar).visibility = View.GONE
         } else {
@@ -150,20 +150,42 @@ class ReservasActivity : BaseActivity() {
                 it.estado == com.softnamic.proyectointegradorii.mesas.EstadoMesa.DISPONIBLE && it.activo == 1 &&
                 (!tieneZona || it.zona.equals(reserva.zona, ignoreCase = true))
             }
-            val nombresMesas = mesasDisponibles.map { "${it.nombre} (${it.zona})" }
-            val mesasAdapter = ArrayAdapter(
-                this,
-                R.layout.spinner_item_custom,
-                if (nombresMesas.isEmpty()) listOf(if (tieneZona) "No hay mesas en ${reserva.zona}" else "No hay mesas disponibles") else nombresMesas
-            )
-            mesasAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item_custom)
-            spMesas.adapter = mesasAdapter
+            
+            llMesasCheckboxes.removeAllViews()
+
+            if (mesasDisponibles.isEmpty()) {
+                val tvVacia = TextView(this).apply {
+                    text = if (tieneZona) "No hay mesas en ${reserva.zona}" else "No hay mesas disponibles"
+                    setTextColor(android.graphics.Color.parseColor("#9E9E9E"))
+                }
+                llMesasCheckboxes.addView(tvVacia)
+            } else {
+                val updateCheckboxes = {
+                    val seleccionadas = checkBoxes.filter { it.isChecked }.map { it.tag as com.softnamic.proyectointegradorii.mesas.Mesa }
+                    val capacidadTotal = seleccionadas.sumOf { it.capacidad }
+                    if (capacidadTotal >= reserva.personas && seleccionadas.isNotEmpty()) {
+                        checkBoxes.filter { !it.isChecked }.forEach { it.isEnabled = false }
+                    } else {
+                        checkBoxes.forEach { it.isEnabled = true }
+                    }
+                }
+
+                mesasDisponibles.forEach { mesa ->
+                    val cb = CheckBox(this).apply {
+                        text = "${mesa.nombre} (Cap: ${mesa.capacidad})"
+                        tag = mesa
+                        setOnCheckedChangeListener { _, _ -> updateCheckboxes() }
+                    }
+                    llMesasCheckboxes.addView(cb)
+                    checkBoxes.add(cb)
+                }
+            }
 
             spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                     val selected = acciones[position]
                     val isMesaRequerida = selected == "Llegó y asignar mesa" || selected == "Asignar mesa"
-                    spMesas.visibility = if (isMesaRequerida) View.VISIBLE else View.GONE
+                    llMesasCheckboxes.visibility = if (isMesaRequerida) View.VISIBLE else View.GONE
                     tvMesasDisponiblesLabel.visibility = if (isMesaRequerida) View.VISIBLE else View.GONE
                 }
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -175,6 +197,10 @@ class ReservasActivity : BaseActivity() {
             .setCancelable(true)
             .create()
 
+        dialogView.findViewById<ImageButton>(R.id.btnClose).setOnClickListener {
+            dialog.dismiss()
+        }
+
         dialogView.findViewById<Button>(R.id.btnAplicar).setOnClickListener {
             val accionSeleccionada = spinner.selectedItem?.toString() ?: return@setOnClickListener
             val tieneZona = !reserva.zona.isNullOrBlank() && reserva.zona != "General"
@@ -183,33 +209,23 @@ class ReservasActivity : BaseActivity() {
                 (!tieneZona || it.zona.equals(reserva.zona, ignoreCase = true))
             }
 
-            if (accionSeleccionada == "Sólo marcar llegada") {
-                dialog.dismiss()
-                Toast.makeText(this, "Registrando llegada...", Toast.LENGTH_SHORT).show()
-                viewModel.checkinReservacion(reserva.id) { exito, msg ->
-                    runOnUiThread {
-                        if (exito) Toast.makeText(this, "Llegada registrada", Toast.LENGTH_SHORT).show()
-                        else Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
-                    }
-                }
-            } else if (accionSeleccionada == "Llegó y asignar mesa" || accionSeleccionada == "Asignar mesa") {
-                if (mesasDisponibles.isEmpty()) {
-                    Toast.makeText(this, "No hay mesas disponibles", Toast.LENGTH_LONG).show()
+            if (accionSeleccionada == "Llegó y asignar mesa" || accionSeleccionada == "Asignar mesa") {
+                val seleccionadas = checkBoxes.filter { it.isChecked }.map { it.tag as com.softnamic.proyectointegradorii.mesas.Mesa }
+                if (seleccionadas.isEmpty()) {
+                    Toast.makeText(this, "Seleccione al menos una mesa al asignar", Toast.LENGTH_LONG).show()
                     return@setOnClickListener
                 }
-                val selectedMesaIdx = spMesas.selectedItemPosition
-                if (selectedMesaIdx < 0 || selectedMesaIdx >= mesasDisponibles.size) return@setOnClickListener
-                val mesaSeleccionada = mesasDisponibles[selectedMesaIdx]
+                
+                val mesaIds = seleccionadas.map { it.id }
+                val zonaId = seleccionadas.first().zonaId 
 
                 dialog.dismiss()
 
-                if (accionSeleccionada == "Llegó y asignar mesa" || accionSeleccionada == "Asignar mesa") {
-                    Toast.makeText(this, "Asignando mesa...", Toast.LENGTH_SHORT).show()
-                    viewModel.abrirMesa(reserva.id, mesaSeleccionada.id, mesaSeleccionada.zonaId, reserva.personas, reserva.comentarios, reserva.nombreCliente) { exito, msg ->
-                        runOnUiThread {
-                            if (exito) Toast.makeText(this, "✅ Operación exitosa", Toast.LENGTH_SHORT).show()
-                            else Toast.makeText(this, "Error: $msg", Toast.LENGTH_LONG).show()
-                        }
+                Toast.makeText(this, "Asignando mesa(s)...", Toast.LENGTH_SHORT).show()
+                viewModel.abrirMesa(reserva.id, mesaIds, zonaId, reserva.personas, reserva.comentarios, reserva.nombreCliente) { exito, msg ->
+                    runOnUiThread {
+                        if (exito) Toast.makeText(this, "Operación exitosa", Toast.LENGTH_SHORT).show()
+                        else Toast.makeText(this, "Error: $msg", Toast.LENGTH_LONG).show()
                     }
                 }
             } else if (accionSeleccionada == "Cancelar reservación") {

@@ -30,7 +30,17 @@ class InicioActivity : BaseActivity() {
         lifecycleScope.launch {
             launch {
                 RestaurantRepository.reservas.collect { reservas ->
-                    tvReservasCount.text = reservas.size.toString()
+                    val sdf = SimpleDateFormat("yyyy-MM-dd", Locale("es", "MX"))
+                    sdf.timeZone = TimeZone.getTimeZone("America/Mexico_City")
+                    val hoy = sdf.format(Date())
+                    
+                    val activasHoy = reservas.filter { r ->
+                        r.fecha == hoy &&
+                        r.estado?.lowercase() != "finalizada" &&
+                        r.estado?.lowercase() != "cancelada" &&
+                        r.estado?.lowercase() != "no_show"
+                    }
+                    tvReservasCount.text = activasHoy.size.toString()
                 }
             }
             launch {

@@ -67,14 +67,14 @@ class MesasActivity : BaseActivity() {
 
     private fun mostrarDialogoLiberar(mesa: Mesa) {
         val dialog = androidx.appcompat.app.AlertDialog.Builder(this)
-            .setTitle("🍽️ Liberar ${mesa.nombre}")
+            .setTitle("Liberar ${mesa.nombre}")
             .setMessage("¿Estás seguro de que quieres liberar esta mesa?")
             .setPositiveButton("Sí, liberar mesa") { _, _ ->
                 val ocId = mesa.ocupacionId
                 if (ocId != null) {
                     viewModel.finalizarOcupacion(ocId) { exito, msg ->
                         runOnUiThread {
-                            if (exito) Toast.makeText(this, "✅ Mesa liberada", Toast.LENGTH_SHORT).show()
+                            if (exito) Toast.makeText(this, "Mesa liberada", Toast.LENGTH_SHORT).show()
                             else Toast.makeText(this, "Error: $msg", Toast.LENGTH_LONG).show()
                         }
                     }

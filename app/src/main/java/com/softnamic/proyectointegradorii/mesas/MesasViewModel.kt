@@ -48,7 +48,7 @@ class MesasViewModel : ViewModel() {
             }
         }
 
-        filtradas
+        filtradas.sortedByDescending { it.estado == EstadoMesa.OCUPADA }
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),

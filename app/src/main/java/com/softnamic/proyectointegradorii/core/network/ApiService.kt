@@ -31,7 +31,8 @@ interface ApiService {
     suspend fun getReservaciones(
         @Header("Authorization") token: String,
         @Path("rol") rol: String,
-        @Query("fecha") fecha: String
+        @Query("desde") desde: String,
+        @Query("hasta") hasta: String
     ): Response<ApiResponse<com.softnamic.proyectointegradorii.reservas.ReservaResponse>>
 
     @PATCH("api/staff/reservaciones/{id}/checkin")

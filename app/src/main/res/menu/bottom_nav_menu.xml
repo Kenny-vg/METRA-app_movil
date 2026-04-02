@@ -19,6 +19,6 @@
     <item
         android:id="@+id/bottom_profile"
         android:icon="@drawable/ico_usuario"
-        android:title="Perfil"/>
+        android:title="Registro"/>
 </menu>
 

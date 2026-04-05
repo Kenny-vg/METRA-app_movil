@@ -1,12 +1,16 @@
 package com.softnamic.proyectointegradorii.inicio
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.card.MaterialCardView
 import com.softnamic.proyectointegradorii.R
 import com.softnamic.proyectointegradorii.core.base.BaseActivity
 import com.softnamic.proyectointegradorii.core.data.RestaurantRepository
 import com.softnamic.proyectointegradorii.mesas.EstadoMesa
+import com.softnamic.proyectointegradorii.mesas.MesasActivity
+import com.softnamic.proyectointegradorii.reservas.ReservasActivity
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
@@ -61,6 +65,8 @@ class InicioActivity : BaseActivity() {
         val tvBienvenida = findViewById<TextView>(R.id.tvBienvenida)
         val tvNombreCafeteria = findViewById<TextView>(R.id.tvNombreCafeteria)
         val tvFecha = findViewById<TextView>(R.id.tvFecha)
+        val cardReservas = findViewById<MaterialCardView>(R.id.cardReservas)
+        val cardMesas = findViewById<MaterialCardView>(R.id.cardMesas)
         
         // 1. Nombre de la cafetería
         tvNombreCafeteria.text = cafeName.uppercase()
@@ -72,5 +78,16 @@ class InicioActivity : BaseActivity() {
 
         // 3. Saludo al usuario
         tvBienvenida.text = "¡Bienvenido, $name!"
+
+        // Click listeners para los cards
+        cardReservas.setOnClickListener {
+            val intent = Intent(this, ReservasActivity::class.java)
+            startActivity(intent)
+        }
+
+        cardMesas.setOnClickListener {
+            val intent = Intent(this, MesasActivity::class.java)
+            startActivity(intent)
+        }
     }
 }

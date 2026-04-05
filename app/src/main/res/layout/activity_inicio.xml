@@ -104,8 +104,8 @@
                         app:cardCornerRadius="12dp"
                         app:cardElevation="4dp"
                         app:strokeWidth="1dp"
-                        app:strokeColor="@color/border_light"
-                        app:cardBackgroundColor="@color/white">
+                        app:strokeColor="@color/coffee_brown_dark"
+                        app:cardBackgroundColor="@color/coffee_surface">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -120,29 +120,23 @@
                                 android:layout_weight="1"
                                 android:orientation="vertical">
                                 <TextView
+                                    android:id="@+id/tvReservasHoyLabel"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Reservas"
-                                    android:textColor="@color/coffee_primary"
+                                    android:text="Reservas: 0"
+                                    android:textColor="@color/dynamic_accent_text"
                                     android:textStyle="bold"
-                                    android:textSize="18sp"
-                                    android:fontFamily="@font/lora"/>
+                                    android:textSize="16sp"
+                                    android:fontFamily="@font/lato"/>
                                 <TextView
+                                    android:id="@+id/tvProximaReserva"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Ver agenda de hoy"
-                                    android:textSize="12sp"
-                                    android:textColor="@color/text_color_secondary"/>
+                                    android:text="Próxima: --"
+                                    android:textSize="14sp"
+                                    android:textColor="@color/text_color_secondary"
+                                    android:layout_marginTop="4dp"/>
                             </LinearLayout>
-
-                            <TextView
-                                android:id="@+id/tvReservasCount"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="10"
-                                android:textColor="@color/coffee_primary"
-                                android:textStyle="bold"
-                                android:textSize="32sp" />
                         </LinearLayout>
                     </com.google.android.material.card.MaterialCardView>
 
@@ -151,54 +145,85 @@
                         android:id="@+id/cardMesas"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
+                        android:layout_marginBottom="24dp"
                         android:clickable="true"
                         android:focusable="true"
                         android:foreground="?android:attr/selectableItemBackground"
                         app:cardCornerRadius="12dp"
                         app:cardElevation="4dp"
                         app:strokeWidth="1dp"
-                        app:strokeColor="@color/border_light"
-                        app:cardBackgroundColor="@color/white">
+                        app:strokeColor="@color/coffee_brown_dark"
+                        app:cardBackgroundColor="@color/coffee_surface">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:padding="20dp"
-                            android:gravity="center_vertical">
+                            android:orientation="vertical"
+                            android:padding="20dp">
 
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:orientation="vertical">
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Mesas"
-                                    android:textColor="@color/coffee_primary"
-                                    android:textStyle="bold"
-                                    android:textSize="18sp"
-                                    android:fontFamily="@font/lora" />
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Gestionar disponibilidad"
-                                    android:textSize="12sp"
-                                    android:textColor="@color/text_color_secondary"/>
-                            </LinearLayout>
+
 
                             <TextView
-                                android:id="@+id/tvMesasCount"
+                                android:id="@+id/tvMesasTotales"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="15"
-                                android:textColor="@color/coffee_primary"
+                                android:text="Mesas totales: 0"
+                                android:textSize="16sp"
+                                android:fontFamily="@font/lato"
                                 android:textStyle="bold"
-                                android:textSize="32sp" />
+                                android:textColor="@color/dynamic_accent_text"/>
+
+                            <TextView
+                                android:id="@+id/tvMesasDisponibles"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Disponibles: 0"
+                                android:textSize="16sp"
+                                android:fontFamily="@font/lato"
+                                android:textColor="@color/status_available"/>
+
+                            <TextView
+                                android:id="@+id/tvMesasOcupadas"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Ocupadas: 0"
+                                android:textSize="16sp"
+                                android:fontFamily="@font/lato"
+                                android:textColor="@color/status_occupied"/>
+
                         </LinearLayout>
                     </com.google.android.material.card.MaterialCardView>
+                    
+                    <!-- PRÓXIMAS RESERVAS HEADER -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Próximas reservas"
+                        android:textColor="@color/dynamic_accent_text"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/lato"
+                        android:layout_marginBottom="12dp"/>
+                        
+                    <!-- CONTAINER PARA LISTA DINÁMICA DE RESERVAS -->
+                    <LinearLayout
+                        android:id="@+id/llProximasReservas"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <!-- Las reservas se insertarán aquí dinámicamente -->
+                        <TextView
+                            android:id="@+id/tvNoReservas"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Cargando..."
+                            android:textAlignment="center"
+                            android:textSize="14sp"
+                            android:textColor="@color/text_color_secondary"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginBottom="32dp"/>
+                    </LinearLayout>
+
                 </LinearLayout>
 
             </LinearLayout>

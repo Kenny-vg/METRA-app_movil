@@ -58,4 +58,7 @@
     <color name="reserva_cancelada_text">#C62828</color>     <!-- Dark Red -->
     <color name="reserva_noshow_bg">#FFCDD2</color>          <!-- Strong Red -->
     <color name="reserva_noshow_text">#B71C1C</color>        <!-- Very Dark Red -->
+    
+    <color name="dynamic_accent_text">@color/coffee_primary</color>
+    <color name="dynamic_accent_secondary_text">@color/coffee_secondary</color>
 </resources>

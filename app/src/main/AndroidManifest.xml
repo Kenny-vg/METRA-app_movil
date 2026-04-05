@@ -37,9 +37,9 @@
             android:exported="true" />
 
         <!-- DEMÁS PANTALLAS -->
-        <activity android:name=".reservas.ReservasActivity" />
-        <activity android:name=".mesas.MesasActivity" />
-        <activity android:name=".wailkin.RegistrarClienteActivity" />
+        <activity android:name=".reservas.ReservasActivity" android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".mesas.MesasActivity" android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".wailkin.RegistrarClienteActivity" android:windowSoftInputMode="adjustPan" />
 
         <meta-data
             android:name="preloaded_fonts"

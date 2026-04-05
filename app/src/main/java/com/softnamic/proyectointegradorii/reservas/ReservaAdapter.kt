@@ -52,7 +52,7 @@ class ReservaAdapter(
         val card = holder.itemView as com.google.android.material.card.MaterialCardView
 
         // Reset card color
-        card.setCardBackgroundColor(Color.WHITE)
+        card.setCardBackgroundColor(ContextCompat.getColor(ctx, R.color.coffee_surface))
 
         when (estadoTxt) {
             "pendiente" -> {
@@ -78,7 +78,7 @@ class ReservaAdapter(
                 val barColor = Color.parseColor("#9E9E9E")
                 holder.estado.backgroundTintList = android.content.res.ColorStateList.valueOf(bgColor)
                 holder.viewEstadoBar.setBackgroundColor(barColor)
-                card.setCardBackgroundColor(Color.parseColor("#F5F5F5"))
+                card.setCardBackgroundColor(ContextCompat.getColor(ctx, R.color.coffee_surface))
             }
             "cancelada" -> {
                 holder.estado.text = "CANCELADA"
@@ -87,7 +87,7 @@ class ReservaAdapter(
                 val barColor = ContextCompat.getColor(ctx, R.color.reserva_cancelada_text)
                 holder.estado.backgroundTintList = android.content.res.ColorStateList.valueOf(bgColor)
                 holder.viewEstadoBar.setBackgroundColor(barColor)
-                card.setCardBackgroundColor(Color.parseColor("#FFF5F5"))
+                card.setCardBackgroundColor(ContextCompat.getColor(ctx, R.color.coffee_surface))
             }
             "no_show" -> {
                 holder.estado.text = "NO SHOW"
@@ -96,7 +96,7 @@ class ReservaAdapter(
                 val barColor = ContextCompat.getColor(ctx, R.color.reserva_noshow_text)
                 holder.estado.backgroundTintList = android.content.res.ColorStateList.valueOf(bgColor)
                 holder.viewEstadoBar.setBackgroundColor(barColor)
-                card.setCardBackgroundColor(Color.parseColor("#FFF5F5"))
+                card.setCardBackgroundColor(ContextCompat.getColor(ctx, R.color.coffee_surface))
             }
             else -> {
                 holder.estado.text = estadoTxt.uppercase()

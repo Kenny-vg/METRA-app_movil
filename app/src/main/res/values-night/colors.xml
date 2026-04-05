@@ -1,34 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- ============================================================ -->
-    <!-- MODO OSCURO — estos valores sobreescriben los de values/     -->
-    <!-- ============================================================ -->
+    <!-- Backgrounds para modo oscuro (Gris cálido/café ultrabandera oscuro en lugar de negro puro) -->
+    <color name="coffee_cream_background">#2D1F1A</color>
+    <color name="coffee_surface">#3B2C24</color>
+    <color name="fondo">#2D1F1A</color>
+    <color name="splash_background">#2D1F1A</color>
+    <color name="ic_launcher_background">#2D1F1A</color>
 
-    <!-- Primary brand: café más claro para mayor contraste en oscuro -->
-    <color name="coffee_primary">#A07850</color>
-    <color name="coffee_primary_variant">#7A5C3A</color>
-    <color name="coffee_secondary">#B89268</color>
-    <color name="coffee_on_primary">#FFFFFF</color>
-    <color name="coffee_on_secondary">#FFFFFF</color>
-
-    <!-- Fondo principal oscuro (Material 3 dark surface) -->
-    <color name="coffee_cream_background">#121212</color>
-    <color name="coffee_cream">#121212</color>
-    <color name="fondo">#1E1E1E</color>
-
-    <!-- Superficies (cards, campos de texto) -->
-    <color name="coffee_surface">#1E1E1E</color>
-    <color name="coffee_on_surface">#EFEFEF</color>
+    <!-- Texto para modo oscuro (letras blancas/grises claro) -->
     <color name="coffee_on_background">#EFEFEF</color>
-
-    <!-- Texto -->
+    <color name="coffee_on_surface">#EFEFEF</color>
     <color name="text_color_primary">#EFEFEF</color>
     <color name="text_color_secondary">#AAAAAA</color>
-
-    <!-- Legacy aliases -->
-    <color name="coffee_brown_dark">#4E342E</color>
-    <color name="coffee_brown_medium">@color/coffee_secondary</color>
-    <color name="rosa_suave">#2A2015</color>
-    <color name="rosa_letra">#C9A87C</color>
-    <color name="rosa_fuerte">#8D6840</color>
+    
+    <color name="dynamic_accent_text">#FFFFFF</color>
+    <color name="dynamic_accent_secondary_text">#FFFFFF</color>
 </resources>

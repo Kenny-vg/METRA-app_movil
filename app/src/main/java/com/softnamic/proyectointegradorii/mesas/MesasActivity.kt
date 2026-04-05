@@ -66,7 +66,7 @@ class MesasActivity : BaseActivity() {
     }
 
     private fun mostrarDialogoLiberar(mesa: Mesa) {
-        val dialog = androidx.appcompat.app.AlertDialog.Builder(this)
+        val builder = com.google.android.material.dialog.MaterialAlertDialogBuilder(this)
             .setTitle("Liberar ${mesa.nombre}")
             .setMessage("¿Estás seguro de que quieres liberar esta mesa?")
             .setPositiveButton("Sí, liberar mesa") { _, _ ->
@@ -81,7 +81,14 @@ class MesasActivity : BaseActivity() {
                 }
             }
             .setNegativeButton("Cancelar", null)
-            .create()
+            
+        val dialog = builder.create()
+        dialog.setOnShowListener {
+            val btnPositive = dialog.getButton(androidx.appcompat.app.AlertDialog.BUTTON_POSITIVE)
+            val btnNegative = dialog.getButton(androidx.appcompat.app.AlertDialog.BUTTON_NEGATIVE)
+            btnPositive.setTextColor(android.graphics.Color.WHITE)
+            btnNegative.setTextColor(android.graphics.Color.WHITE)
+        }
         dialog.show()
     }
 
